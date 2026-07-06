@@ -172,6 +172,7 @@ public class Alquiler extends javax.swing.JFrame {
         Ingresar_Alquiler.addActionListener(this::Ingresar_AlquilerActionPerformed);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jLabel10.setText("Fecha");
 
@@ -476,6 +477,14 @@ public class Alquiler extends javax.swing.JFrame {
     private void B_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_NOActionPerformed
         ant = true;
     }//GEN-LAST:event_B_NOActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SelecciónCategoria ventanaAnterior = new SelecciónCategoria();
+        ventanaAnterior.setLocationRelativeTo(null);
+        ventanaAnterior.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

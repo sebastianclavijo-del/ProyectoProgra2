@@ -7,6 +7,9 @@ package GUI;
 import Logica.Scooter;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
+import Persistencia.VehiculoPersistencia;
+
+
 /**
  *
  * @author SEBASTIAN
@@ -20,8 +23,27 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public CatScooters() {
         initComponents();
+        // Inmediatamente después de dibujar los componentes visuales, disparamos la lectura
+        cargarDatosDelArchivo();
     }
     
+    // Método puente para extraer los datos del disco y pasarlos a tu tabla
+    private void cargarDatosDelArchivo() {
+        VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
+        ArrayList<Vehiculo1> listaRecuperada = new ArrayList<>();
+        
+        try {
+            // Deserializamos el archivo .dat y llenamos nuestra lista en memoria
+            persistencia.RecuperarVehiculos(listaRecuperada);
+            
+            // Le enviamos la lista llena a tu método poblador
+            // Aplicamos un cast explícito por la declaración genérica de tu JFrame
+            EscribirScooter((ArrayList<T>) listaRecuperada);
+            
+        } catch (Exception e) {
+            System.err.println("Error al cargar los vehículos desde el archivo: " + e.getMessage());
+        }
+    }
     public void EscribirScooter(ArrayList<T> listaVehiculos) {
     // Se obtiene el modelo de jTable1
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
@@ -137,8 +159,18 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
         jScrollPane3.setViewportView(jTable1);
 
         jButton1.setText("Iniciar alquiler");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -152,11 +184,11 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addGap(284, 284, 284)
-                                .addComponent(jButton1))
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton1)))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -164,9 +196,9 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 401, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -175,6 +207,31 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SelecciónCategoria ventanaCategoria = new SelecciónCategoria();
+    ventanaCategoria.setLocationRelativeTo(null);
+    ventanaCategoria.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+       int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un vehículo de la tabla antes de iniciar el alquiler.", 
+                "Aviso", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
+            Alquiler ventanaAlquiler = new Alquiler();
+            ventanaAlquiler.setLocationRelativeTo(null);
+            ventanaAlquiler.setVisible(true);
+            this.dispose(); 
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

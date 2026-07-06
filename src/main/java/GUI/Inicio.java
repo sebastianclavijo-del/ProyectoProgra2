@@ -39,8 +39,18 @@ public class Inicio extends javax.swing.JFrame {
         jLabel1.setText("SISTEMA DE GESTIÓN Y ALQUILER DE VEHÍCULOS");
 
         jButton1.setText("Ver Catologo de vehiculos");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Iniciar Sesión");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Salir");
 
@@ -80,6 +90,34 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IniciarSesion ventanaLogin = new IniciarSesion();
+    
+    // 2. Centrarla en la pantalla (opcional pero recomendado)
+    ventanaLogin.setLocationRelativeTo(null);
+    
+    // 3. Hacerla visible
+    ventanaLogin.setVisible(true);
+    
+    // 4. Cerrar la ventana actual para que no se queden acumuladas
+    this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        SelecciónCategoria ventanaCategoria = new SelecciónCategoria(); // Usa el nombre exacto de tu clase
+    
+    // 2. La centramos en la pantalla
+           ventanaCategoria.setLocationRelativeTo(null);
+    
+    // 3. La hacemos visible
+            ventanaCategoria.setVisible(true);
+    
+    // 4. Cerramos la pantalla de Inicio 
+    this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

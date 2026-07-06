@@ -7,6 +7,8 @@ package GUI;
 import ClasesMaestras.Vehiculo1;
 import Logica.Bicicleta;
 import java.util.ArrayList;
+import Persistencia.VehiculoPersistencia;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author SEBASTIAN
@@ -17,8 +19,21 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
     /**
      * Creates new form CatBicicletas
      */
-    public CatBicicletas() {
+    public CatBicicletas() { 
         initComponents();
+        cargarDatosDelArchivo(); 
+    }
+
+    private void cargarDatosDelArchivo() {
+        VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
+        ArrayList<Vehiculo1> listaRecuperada = new ArrayList<>();
+        try {
+            persistencia.RecuperarVehiculos(listaRecuperada);
+            // Cambia 'EscribirAuto' por EscribirScooter, EscribirBicicleta, etc.
+            EscribirBicicleta((ArrayList<T>) listaRecuperada); 
+        } catch (Exception e) {
+            System.err.println("Error al cargar los datos: " + e.getMessage());
+        }
     }
     
     public void EscribirBicicleta(ArrayList<T> listaVehiculos) {
@@ -92,6 +107,11 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
         });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -130,7 +150,28 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un vehículo de la tabla antes de iniciar el alquiler.", 
+                "Aviso", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
+            Alquiler ventanaAlquiler = new Alquiler();
+            ventanaAlquiler.setLocationRelativeTo(null);
+            ventanaAlquiler.setVisible(true);
+            this.dispose(); 
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SelecciónCategoria ventanaCategoria = new SelecciónCategoria();
+        ventanaCategoria.setLocationRelativeTo(null);
+        ventanaCategoria.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

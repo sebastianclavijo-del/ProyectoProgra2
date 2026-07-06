@@ -7,7 +7,7 @@ package GUI;
 import Logica.Moto;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
-
+import Persistencia.VehiculoPersistencia; 
 /**
  *
  * @author SEBASTIAN
@@ -21,6 +21,24 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public CatMotos() {
         initComponents();
+        cargarDatosDelArchivo(); // LLAMADA FALTANTE AGREGADA
+    }
+    
+    // MÉTODO FALTANTE AGREGADO PARA LEER EL DISCO DURO
+    private void cargarDatosDelArchivo() {
+        VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
+        ArrayList<Vehiculo1> listaRecuperada = new ArrayList<>();
+        
+        try {
+            // Deserializamos el archivo .dat
+            persistencia.RecuperarVehiculos(listaRecuperada);
+            
+            // Enviamos la lista para pintar la tabla (casteo explícito requerido por tu genericidad)
+            EscribirMoto((ArrayList<T>) listaRecuperada);
+            
+        } catch (Exception e) {
+            System.err.println("Error al cargar las motos desde el archivo: " + e.getMessage());
+        }
     }
     
     public void EscribirMoto(ArrayList<T> listaVehiculos) {
@@ -78,8 +96,18 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         jButton1.setText("Iniciar alquiler");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -116,6 +144,33 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        SelecciónCategoria ventanaCategoria = new SelecciónCategoria();
+    ventanaCategoria.setLocationRelativeTo(null);
+    ventanaCategoria.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code hereAlquiler ventanaAlquiler = new Alquiler();
+    int filaSeleccionada = jTable1.getSelectedRow();
+        
+        if (filaSeleccionada == -1) {
+            // Si es -1, mostramos un mensaje de alerta y detenemos la ejecución del botón
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un vehículo de la tabla antes de iniciar el alquiler.", 
+                "Aviso", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        } else {
+            // Si seleccionó una fila, procedemos a abrir la ventana
+            Alquiler ventanaAlquiler = new Alquiler();
+            ventanaAlquiler.setLocationRelativeTo(null);
+            ventanaAlquiler.setVisible(true);
+            this.dispose(); // Cerramos el catálogo
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

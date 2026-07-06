@@ -4,12 +4,19 @@
  */
 package GUI;
 
+import Excepciones.CaractInicio;
+import Excepciones.SinDigitos;
+import Excepciones.SinLetras;
+import Excepciones.TextVacio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author SEBASTIAN
  */
 public class IngresoBicicleta extends javax.swing.JFrame {
-    
+    int tipo, tipomot, porcBat;
+    boolean pan;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresoBicicleta.class.getName());
 
     /**
@@ -18,7 +25,58 @@ public class IngresoBicicleta extends javax.swing.JFrame {
     public IngresoBicicleta() {
         initComponents();
     }
-
+    
+    public void RevisionTextoDig(String cad) throws SinDigitos{
+        int cont=0;
+        for(int i=0;i<cad.length();i++){
+            char c = cad.charAt(i);
+            if(Character.isDigit(c)){
+                cont++;
+            }
+        }
+        if(cont>0){
+            throw new SinDigitos("Este texto no puede llevar numeros.");
+        }
+    }
+    
+    public void RevisionTextoLet(String cad) throws SinLetras{
+        int let = 0;
+        for(int i=0;i<cad.length();i++){
+            char c = cad.charAt(i);
+            if(Character.isLetter(c)){
+                let++;
+            }
+        }
+        if(let>0){
+            throw new SinLetras("Este texto no puede llevar letras.");
+        }
+    }
+    
+    public void RevisionTextoVacio(String cad) throws TextVacio{
+        if(cad.length() == 0){
+            throw new TextVacio("Escriba algo para ingresar...");
+        }
+    }
+    
+    public void Comienzo(String cad) throws CaractInicio{
+        char c = cad.charAt(0);
+        char t = ' ';
+        if(c == t){
+            throw new CaractInicio("Caracter de inicio vacio.");
+        }
+    }
+    
+    public void RevisionTextoEspeciales(String texto) throws IllegalArgumentException {  
+        for (int i = 0; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            
+            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+                throw new IllegalArgumentException("Error: Se encontró un carácter especial '" + c + "' en la cadena.");
+            }
+        }
+        
+        System.out.println("La cadena '" + texto + "' es válida y está limpia.");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -35,10 +93,10 @@ public class IngresoBicicleta extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        T_Tipo = new javax.swing.JTextField();
+        T_TipoM = new javax.swing.JTextField();
+        T_Pan = new javax.swing.JTextField();
+        T_PorcBat = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -62,13 +120,29 @@ public class IngresoBicicleta extends javax.swing.JFrame {
 
         jButton2.setText("Volver");
 
-        jTextField1.setText("jTextField1");
+        T_Tipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_TipoActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        T_TipoM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_TipoMActionPerformed(evt);
+            }
+        });
 
-        jTextField3.setText("jTextField3");
+        T_Pan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_PanActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setText("jTextField4");
+        T_PorcBat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_PorcBatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,7 +159,7 @@ public class IngresoBicicleta extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField4))
+                                .addComponent(T_PorcBat, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -93,9 +167,9 @@ public class IngresoBicicleta extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField3))))))
+                                    .addComponent(T_Tipo, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                                    .addComponent(T_TipoM)
+                                    .addComponent(T_Pan))))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(49, 49, 49)
@@ -112,19 +186,19 @@ public class IngresoBicicleta extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_Tipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_TipoM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_Pan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_PorcBat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -136,8 +210,83 @@ public class IngresoBicicleta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void T_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_TipoActionPerformed
+        try{
+            tipo = Integer.parseInt(T_Tipo.getText());
+            RevisionTextoLet(T_Tipo.getText());
+            RevisionTextoVacio(T_Tipo.getText());
+            Comienzo(T_Tipo.getText());
+            RevisionTextoEspeciales(T_Tipo.getText());
+        }catch(SinLetras e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_TipoActionPerformed
+
+    private void T_TipoMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_TipoMActionPerformed
+        try{
+            tipomot = Integer.parseInt(T_TipoM.getText());
+            RevisionTextoLet(T_TipoM.getText());
+            RevisionTextoVacio(T_TipoM.getText());
+            Comienzo(T_TipoM.getText());
+            RevisionTextoEspeciales(T_TipoM.getText());
+        }catch(SinLetras e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_TipoMActionPerformed
+
+    private void T_PanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_PanActionPerformed
+        String respuesta = T_Pan.getText().trim().toLowerCase();
+    
+        // 2. Comparamos si es exactamente "si" o "no"
+        if (respuesta.equals("si") || respuesta.equals("no") || respuesta.equals("sí")) {
+
+            // El dato es correcto, aquí pones tu lógica para guardar el auto
+            System.out.println("Respuesta válida: " + respuesta);
+
+        } else {
+            // El usuario ingresó otra cosa, mostramos un error
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                "Error: Por favor, ingrese únicamente 'si' o 'no'.", 
+                "Dato inválido", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+
+            // Regresamos el foco al campo de texto para que lo corrija
+            T_Pan.requestFocus(); 
+        }
+    }//GEN-LAST:event_T_PanActionPerformed
+
+    private void T_PorcBatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_PorcBatActionPerformed
+        try{
+            porcBat = Integer.parseInt(T_PorcBat.getText());
+            RevisionTextoLet(T_PorcBat.getText());
+            RevisionTextoVacio(T_PorcBat.getText());
+            Comienzo(T_PorcBat.getText());
+            RevisionTextoEspeciales(T_PorcBat.getText());
+        }catch(SinLetras e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_PorcBatActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +314,10 @@ public class IngresoBicicleta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField T_Pan;
+    private javax.swing.JTextField T_PorcBat;
+    private javax.swing.JTextField T_Tipo;
+    private javax.swing.JTextField T_TipoM;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -172,9 +325,5 @@ public class IngresoBicicleta extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

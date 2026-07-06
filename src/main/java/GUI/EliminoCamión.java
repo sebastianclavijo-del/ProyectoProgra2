@@ -4,11 +4,16 @@
  */
 package GUI;
 
+import java.util.ArrayList;
+import ClasesMaestras.Vehiculo1;
+import Logica.Camion;
+
 /**
  *
  * @author LENOVO
  */
-public class EliminoCamión extends javax.swing.JFrame {
+public class EliminoCamión<T extends Vehiculo1> extends javax.swing.JFrame {
+    ArrayList<T> listaVehiculos = new ArrayList<>();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EliminoCamión.class.getName());
 
@@ -18,7 +23,76 @@ public class EliminoCamión extends javax.swing.JFrame {
     public EliminoCamión() {
         initComponents();
     }
+    
+    public void EscribirCamión() {
+    // Se obtiene el modelo de jTable1
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+    //Se limpia la tabla por si ya tenía datos antes
+    modelo.setRowCount(0);
+    
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T vehiculo = listaVehiculos.get(i);
 
+            // 4. Verificar si es un Auto
+            if (vehiculo instanceof Camion) {
+                modelo.addRow(new Object[]{
+                    ((Camion)vehiculo).getNroSerie(), 
+                    ((Camion)vehiculo).getTipoRemolque(), 
+                    ((Camion)vehiculo).getNumEjes(), 
+                    ((Camion)vehiculo).getCargaNeta(), 
+                    ((Camion)vehiculo).getAlq()
+                });
+            }
+        }
+    }
+    
+    private void eliminarDeLaListaLógica(int nroserie) {
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T v = listaVehiculos.get(i);
+            if (v instanceof Camion) {
+                Camion cami = (Camion) v;
+                if (cami.getNroSerie() == nroserie) { 
+                    listaVehiculos.remove(i);
+                    break;
+                }
+            }
+        }
+    }
+    
+    private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+        //Se obtiene el índice de la fila que el usuario seleccionó (hizo clic)
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        //Se valida que realmente haya seleccionado algo (-1 significa que no hay selección)
+        if (filaSeleccionada != -1) {
+
+            //Pedir confirmación para evitar borrados accidentales
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "¿Estás seguro de que deseas eliminar este auto?", 
+                    "Confirmar", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+
+                //ELIMINAMOS DEL ARRAYLIST (Lógica)
+                // Obtenemos un dato único para buscarlo (ej. la Placa, asumiendo que está en la columna 0)
+                int nroserie = (int) modelo.getValueAt(filaSeleccionada, 0);
+                eliminarDeLaListaLógica(nroserie); 
+
+                //ELIMINAMOS DEL JTABLE (Vista)
+                modelo.removeRow(filaSeleccionada);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Auto eliminado con éxito.");
+            }
+
+        } else {
+            // Si se intenta eliminar sin seleccionar nada, mostramos un aviso
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un auto en la tabla primero.");
+        }
+    }  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,7 +121,7 @@ public class EliminoCamión extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Placa", "Modelo", "N°ejes", "Carga Neta", "Alquiler"
+                "N° serie", "Tipo de remolque", "N°ejes", "Carga Neta", "Alquiler"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

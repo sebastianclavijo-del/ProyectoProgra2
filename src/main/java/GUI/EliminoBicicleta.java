@@ -4,11 +4,17 @@
  */
 package GUI;
 
+import Logica.Bicicleta;
+import java.util.ArrayList;
+import ClasesMaestras.Vehiculo1;
+import Logica.Auto;
+
 /**
  *
  * @author LENOVO
  */
-public class EliminoBicicleta extends javax.swing.JFrame {
+public class EliminoBicicleta<T extends Vehiculo1> extends javax.swing.JFrame {
+    ArrayList<T> listaVehiculos = new ArrayList<>();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EliminoBicicleta.class.getName());
 
@@ -18,7 +24,43 @@ public class EliminoBicicleta extends javax.swing.JFrame {
     public EliminoBicicleta() {
         initComponents();
     }
+    
+    public void EscribirBicicleta(ArrayList<T> listaVehiculos) {
+    // Se obtiene el modelo de jTable1
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+    //Se limpia la tabla por si ya tenía datos antes
+    modelo.setRowCount(0);
+    
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T vehiculo = listaVehiculos.get(i);
 
+            // 4. Verificar si es un Auto
+            if (vehiculo instanceof Bicicleta) {
+                modelo.addRow(new Object[]{
+                    ((Bicicleta)vehiculo).getNroSerie(), 
+                    ((Bicicleta)vehiculo).getTipo(), 
+                    ((Bicicleta)vehiculo).getTipoMotor(), 
+                    ((Bicicleta)vehiculo).getPorcBateria(), 
+                    ((Bicicleta)vehiculo).getAlq()
+                });
+            }
+        }
+    }
+    
+    private void eliminarDeLaListaLógica(int nroserie) {
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T v = listaVehiculos.get(i);
+            if (v instanceof Bicicleta) {
+                Bicicleta bici = (Bicicleta) v;
+                if (bici.getNroSerie() == nroserie) { 
+                    listaVehiculos.remove(i);
+                    break;
+                }
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -31,7 +73,7 @@ public class EliminoBicicleta extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        B_Eliminar = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -52,7 +94,8 @@ public class EliminoBicicleta extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jButton1.setText("Eliminar");
+        B_Eliminar.setText("Eliminar");
+        B_Eliminar.addActionListener(this::B_EliminarActionPerformed);
 
         jButton2.setText("Salir");
 
@@ -71,7 +114,7 @@ public class EliminoBicicleta extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton1))
+                                .addComponent(B_Eliminar))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 641, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16))))
         );
@@ -84,13 +127,47 @@ public class EliminoBicicleta extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(B_Eliminar)
                     .addComponent(jButton2))
                 .addGap(11, 11, 11))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_EliminarActionPerformed
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+        //Se obtiene el índice de la fila que el usuario seleccionó (hizo clic)
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        //Se valida que realmente haya seleccionado algo (-1 significa que no hay selección)
+        if (filaSeleccionada != -1) {
+
+            //Pedir confirmación para evitar borrados accidentales
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "¿Estás seguro de que deseas eliminar este auto?", 
+                    "Confirmar", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+
+                //ELIMINAMOS DEL ARRAYLIST (Lógica)
+                // Obtenemos un dato único para buscarlo (ej. la Placa, asumiendo que está en la columna 0)
+                int nroserie = (int) modelo.getValueAt(filaSeleccionada, 0);
+                eliminarDeLaListaLógica(nroserie); 
+
+                //ELIMINAMOS DEL JTABLE (Vista)
+                modelo.removeRow(filaSeleccionada);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Auto eliminado con éxito.");
+            }
+
+        } else {
+            // Si se intenta eliminar sin seleccionar nada, mostramos un aviso
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un auto en la tabla primero.");
+        }
+    }//GEN-LAST:event_B_EliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -118,7 +195,7 @@ public class EliminoBicicleta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton B_Eliminar;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

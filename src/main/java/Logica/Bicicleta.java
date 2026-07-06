@@ -36,6 +36,14 @@ public class Bicicleta extends Vehiculo1 implements VehElectrico{
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
+
+    public int getPorcBateria() {
+        return porcBateria;
+    }
+
+    public void setPorcBateria(int porcBateria) {
+        this.porcBateria = porcBateria;
+    }
     
     //Constructor
     Bicicleta(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean tipoMot, boolean pan, int tip){

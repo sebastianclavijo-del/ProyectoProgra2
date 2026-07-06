@@ -4,12 +4,19 @@
  */
 package GUI;
 
+import Excepciones.CaractInicio;
+import Excepciones.SinDigitos;
+import Excepciones.SinLetras;
+import Excepciones.TextVacio;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author SEBASTIAN
  */
 public class IngresoAuto extends javax.swing.JFrame {
-    
+    String marca, modelo, placa;
+    int nroPas;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresoAuto.class.getName());
 
     /**
@@ -18,7 +25,58 @@ public class IngresoAuto extends javax.swing.JFrame {
     public IngresoAuto() {
         initComponents();
     }
-
+    
+    public void RevisionTextoDig(String cad) throws SinDigitos{
+        int cont=0;
+        for(int i=0;i<cad.length();i++){
+            char c = cad.charAt(i);
+            if(Character.isDigit(c)){
+                cont++;
+            }
+        }
+        if(cont>0){
+            throw new SinDigitos("Este texto no puede llevar numeros.");
+        }
+    }
+    
+    public void RevisionTextoLet(String cad) throws SinLetras{
+        int let = 0;
+        for(int i=0;i<cad.length();i++){
+            char c = cad.charAt(i);
+            if(Character.isLetter(c)){
+                let++;
+            }
+        }
+        if(let>0){
+            throw new SinLetras("Este texto no puede llevar letras.");
+        }
+    }
+    
+    public void RevisionTextoVacio(String cad) throws TextVacio{
+        if(cad.length() == 0){
+            throw new TextVacio("Escriba algo para ingresar...");
+        }
+    }
+    
+    public void Comienzo(String cad) throws CaractInicio{
+        char c = cad.charAt(0);
+        char t = ' ';
+        if(c == t){
+            throw new CaractInicio("Caracter de inicio vacio.");
+        }
+    }
+    
+    public void RevisionTextoEspeciales(String texto) throws IllegalArgumentException {  
+        for (int i = 0; i < texto.length(); i++) {
+            char c = texto.charAt(i);
+            
+            if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+                throw new IllegalArgumentException("Error: Se encontró un carácter especial '" + c + "' en la cadena.");
+            }
+        }
+        
+        System.out.println("La cadena '" + texto + "' es válida y está limpia.");
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,10 +94,10 @@ public class IngresoAuto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        T_Marca = new javax.swing.JTextField();
+        T_Modelo = new javax.swing.JTextField();
+        T_Placa = new javax.swing.JTextField();
+        T_NumPasaj = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
 
@@ -62,13 +120,29 @@ public class IngresoAuto extends javax.swing.JFrame {
 
         jLabel5.setText("Numero de pasajeros");
 
-        jTextField1.setText("jTextField1");
+        T_Marca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_MarcaActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        T_Modelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_ModeloActionPerformed(evt);
+            }
+        });
 
-        jTextField4.setText("jTextField4");
+        T_Placa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_PlacaActionPerformed(evt);
+            }
+        });
 
-        jTextField5.setText("jTextField5");
+        T_NumPasaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                T_NumPasajActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Siguiente");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -103,7 +177,7 @@ public class IngresoAuto extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
+                                .addComponent(T_NumPasaj, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -111,9 +185,9 @@ public class IngresoAuto extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(86, 86, 86)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                                    .addComponent(jTextField2)
-                                    .addComponent(jTextField4))))))
+                                    .addComponent(T_Marca, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                    .addComponent(T_Modelo)
+                                    .addComponent(T_Placa))))))
                 .addContainerGap(44, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -124,19 +198,19 @@ public class IngresoAuto extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_Marca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_Modelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_Placa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(T_NumPasaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -154,6 +228,72 @@ public class IngresoAuto extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void T_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_MarcaActionPerformed
+        try{
+            marca = T_Marca.getText();
+            RevisionTextoDig(marca);
+            RevisionTextoVacio(marca);
+            Comienzo(marca);
+            RevisionTextoEspeciales(marca);
+        }catch(SinDigitos e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_MarcaActionPerformed
+
+    private void T_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_ModeloActionPerformed
+        try{
+            modelo = T_Modelo.getText();
+            RevisionTextoDig(modelo);
+            RevisionTextoVacio(modelo);
+            Comienzo(modelo);
+            RevisionTextoEspeciales(modelo);
+        }catch(SinDigitos e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_ModeloActionPerformed
+
+    private void T_PlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_PlacaActionPerformed
+        try{
+            placa = T_Modelo.getText();
+            RevisionTextoVacio(placa);
+            Comienzo(placa);
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_PlacaActionPerformed
+
+    private void T_NumPasajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_NumPasajActionPerformed
+        try{
+            nroPas = Integer.parseInt(T_NumPasaj.getText());
+            RevisionTextoLet(T_NumPasaj.getText());
+            RevisionTextoVacio(T_NumPasaj.getText());
+            Comienzo(T_NumPasaj.getText());
+            RevisionTextoEspeciales(T_NumPasaj.getText());
+        }catch(SinLetras e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(TextVacio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(CaractInicio e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }catch(IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_T_NumPasajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -181,6 +321,10 @@ public class IngresoAuto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField T_Marca;
+    private javax.swing.JTextField T_Modelo;
+    private javax.swing.JTextField T_NumPasaj;
+    private javax.swing.JTextField T_Placa;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -190,10 +334,6 @@ public class IngresoAuto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
 }

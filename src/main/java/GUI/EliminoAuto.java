@@ -12,7 +12,7 @@ import ClasesMaestras.Vehiculo1;
  * @author LENOVO
  */
 public class EliminoAuto<T extends Vehiculo1> extends javax.swing.JFrame {
-    
+    ArrayList<T> listaVehiculos = new ArrayList<>();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EliminoAuto.class.getName());
 
     /**
@@ -35,14 +35,27 @@ public class EliminoAuto<T extends Vehiculo1> extends javax.swing.JFrame {
         // 4. Verificar si es un Auto
         if (vehiculo instanceof Auto) {
             modelo.addRow(new Object[]{
+                ((Auto)vehiculo).getPlaca(), 
                 ((Auto)vehiculo).getModelo(), 
                 ((Auto)vehiculo).getMarca(), 
-                ((Auto)vehiculo).getNumPasajeros(), 
-                ((Auto)vehiculo).getAnioFabricacion(), 
-                ((Auto)vehiculo).getEstacion()
+                ((Auto)vehiculo).getEstacion(), 
+                ((Auto)vehiculo).getAlq()
             });
         }
     }
+    }
+    
+    private void eliminarDeLaListaLógica(String placa) {
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T v = listaVehiculos.get(i);
+            if (v instanceof Auto) {
+                Auto auto = (Auto) v;
+                if (auto.getPlaca().equals(placa)) { 
+                    listaVehiculos.remove(i);
+                    break;
+                }
+            }
+        }
     }
     
     /**

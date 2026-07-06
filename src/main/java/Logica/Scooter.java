@@ -39,6 +39,22 @@ public class Scooter extends Vehiculo1 implements VehElectrico{
     public void setDiametroRuedas(double diametroRuedas) {
         this.diametroRuedas = diametroRuedas;
     }
+
+    public int getPorcBateria() {
+        return porcBateria;
+    }
+
+    public void setPorcBateria(int porcBateria) {
+        this.porcBateria = porcBateria;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
     
     //Constructor
     Scooter(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean ple, boolean blue, double diam, String marca){

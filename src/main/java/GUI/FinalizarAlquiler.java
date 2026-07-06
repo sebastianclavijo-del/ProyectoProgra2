@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
-
+import ClasesMaestras.Vehiculo1;
 /**
  *
  * @author LENOVO
  */
-public class FinalizarAlquiler extends javax.swing.JFrame {
+public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FinalizarAlquiler.class.getName());
 

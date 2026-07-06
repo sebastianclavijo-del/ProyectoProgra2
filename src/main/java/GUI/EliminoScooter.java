@@ -4,11 +4,16 @@
  */
 package GUI;
 
+import ClasesMaestras.Vehiculo1;
+import Logica.Scooter;
+import java.util.ArrayList;
+
 /**
  *
  * @author LENOVO
  */
-public class EliminoScooter extends javax.swing.JFrame {
+public class EliminoScooter<T extends Vehiculo1> extends javax.swing.JFrame {
+    ArrayList<T> listaVehiculos = new ArrayList<>();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(EliminoScooter.class.getName());
 
@@ -18,7 +23,76 @@ public class EliminoScooter extends javax.swing.JFrame {
     public EliminoScooter() {
         initComponents();
     }
+    
+    public void EscribirScooter() {
+        // Se obtiene el modelo de jTable1
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
 
+        //Se limpia la tabla por si ya tenía datos antes
+        modelo.setRowCount(0);
+
+            for (int i = 0; i < listaVehiculos.size(); i++) {
+                T vehiculo = listaVehiculos.get(i);
+
+                // 4. Verificar si es un Auto
+                if (vehiculo instanceof Scooter) {
+                    modelo.addRow(new Object[]{
+                        ((Scooter)vehiculo).getNroSerie(),  
+                        ((Scooter)vehiculo).getMarca(), 
+                        ((Scooter)vehiculo).getPlegable(), 
+                        ((Scooter)vehiculo).getPorcBateria(),
+                        ((Scooter)vehiculo).getAlq(),
+                    });
+                }
+            }
+    }
+    
+    private void eliminarDeLaListaLógica(int nroserie) {
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T v = listaVehiculos.get(i);
+            if (v instanceof Scooter) {
+                Scooter sco = (Scooter) v;
+                if (sco.getNroSerie() == nroserie) { 
+                    listaVehiculos.remove(i);
+                    break;
+                }
+            }
+        }
+    }
+    
+    private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {                                           
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+        //Se obtiene el índice de la fila que el usuario seleccionó (hizo clic)
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        //Se valida que realmente haya seleccionado algo (-1 significa que no hay selección)
+        if (filaSeleccionada != -1) {
+
+            //Pedir confirmación para evitar borrados accidentales
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "¿Estás seguro de que deseas eliminar este auto?", 
+                    "Confirmar", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+
+                //ELIMINAMOS DEL ARRAYLIST (Lógica)
+                // Obtenemos un dato único para buscarlo (ej. la Placa, asumiendo que está en la columna 0)
+                int nroserie = (int) modelo.getValueAt(filaSeleccionada, 0);
+                eliminarDeLaListaLógica(nroserie); 
+
+                //ELIMINAMOS DEL JTABLE (Vista)
+                modelo.removeRow(filaSeleccionada);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Auto eliminado con éxito.");
+            }
+
+        } else {
+            // Si se intenta eliminar sin seleccionar nada, mostramos un aviso
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un auto en la tabla primero.");
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

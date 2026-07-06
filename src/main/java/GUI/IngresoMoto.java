@@ -4,6 +4,11 @@
  */
 package GUI;
 
+import Excepciones.CaractInicio; 
+import Excepciones.SinDigitos;   
+import Excepciones.SinLetras;    
+import Excepciones.TextVacio;    
+import javax.swing.JOptionPane;
 /**
  *
  * @author SEBASTIAN
@@ -63,6 +68,11 @@ public class IngresoMoto extends javax.swing.JFrame {
         });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,7 +136,41 @@ public class IngresoMoto extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            if(jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jTextField3.getText().isEmpty()) {
+                throw new TextVacio("Todos los campos son obligatorios.");
+            }
+            
+            int tipo = Integer.parseInt(jTextField1.getText());
+            int manillar = Integer.parseInt(jTextField2.getText());
+            double cilindraje = Double.parseDouble(jTextField3.getText());
+            
+            if(tipo < 1 || tipo > 5) throw new IllegalArgumentException("Tipo debe ser entre 1 y 5.");
+            if(manillar < 1 || manillar > 3) throw new IllegalArgumentException("Manillar debe ser entre 1 y 3.");
+
+            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setVisible(true);
+            this.dispose();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error: Por favor, ingrese solo números en los campos.");
+        } catch (TextVacio | IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error inesperado: " + e.getMessage());
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IngresarVehiculo ventanaSeleccion = new IngresarVehiculo();
+        ventanaSeleccion.setLocationRelativeTo(null);
+        ventanaSeleccion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

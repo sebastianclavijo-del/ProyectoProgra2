@@ -223,10 +223,41 @@ public class IngresoAuto extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            // 1. Validamos que los campos no estén vacíos
+            if(T_Marca.getText().isEmpty() || T_Modelo.getText().isEmpty() || T_Placa.getText().isEmpty()) {
+                throw new TextVacio("Todos los campos son obligatorios.");
+            }
+            
+            // 2. Instanciamos la siguiente pantalla
+            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+            
+            // 3. AQUÍ ES DONDE PASAS LOS DATOS (Necesitarás que IngresoDatosGenerales tenga estos setters)
+            // ventanaDatos.setMarca(T_Marca.getText());
+            // ventanaDatos.setModelo(T_Modelo.getText());
+            // ventanaDatos.setPlaca(T_Placa.getText());
+            // ventanaDatos.setNumPasajeros(Integer.parseInt(T_NumPasaj.getText()));
+            
+            // 4. Hacemos visible la nueva ventana y cerramos la actual
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setVisible(true);
+            this.dispose();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El número de pasajeros debe ser un valor numérico.");
+        } catch (TextVacio e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al avanzar: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        IngresarVehiculo ventanaSeleccion = new IngresarVehiculo();
+        ventanaSeleccion.setLocationRelativeTo(null);
+        ventanaSeleccion.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void T_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_MarcaActionPerformed

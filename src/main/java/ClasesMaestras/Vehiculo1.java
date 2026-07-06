@@ -135,4 +135,8 @@ public abstract class Vehiculo1 {
         }
     }
     
+    public boolean isAlq() {
+        return alq;
+    }
+
 }

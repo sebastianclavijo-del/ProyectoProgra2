@@ -4,12 +4,25 @@
  */
 package GUI;
 
+import Excepciones.TextVacio;      
+import javax.swing.JOptionPane;    
+import java.util.ArrayList;        
+import Persistencia.VehiculoPersistencia; 
+import ClasesMaestras.Vehiculo1;   
+import Logica.Auto; 
 /**
  *
  * @author SEBASTIAN
  */
 public class IngresoDatosGenerales extends javax.swing.JFrame {
-    
+    private String marca, modelo, placa;
+private int numPasajeros;
+
+    public void setDatosPrevios(String marca, String modelo, String placa) {
+    this.marca = marca;
+    this.modelo = modelo;
+    this.placa = placa;
+}
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresoDatosGenerales.class.getName());
 
     /**
@@ -58,8 +71,18 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
         jLabel6.setText("Velocidad maxima");
 
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setText("jTextField1");
 
@@ -140,6 +163,54 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            if(jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || 
+               jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || 
+               jTextField5.getText().isEmpty()) {
+                throw new Exception("Por favor, complete todos los campos.");
+            }
+
+            int numSerie = Integer.parseInt(jTextField1.getText().trim());
+            double peso = Double.parseDouble(jTextField2.getText().trim());
+            int estacion = Integer.parseInt(jTextField3.getText().trim()); 
+            int anio = Integer.parseInt(jTextField4.getText().trim());
+            double velMax = Double.parseDouble(jTextField5.getText().trim());
+
+            VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
+            ArrayList<Vehiculo1> lista = new ArrayList<>();
+            
+            try {
+                persistencia.RecuperarVehiculos(lista);
+            } catch (Exception e) {
+            }
+            
+            Auto nuevoAuto = new Auto(this.marca, this.modelo, this.placa, numSerie, (int) peso, estacion, anio, velMax);            lista.add(nuevoAuto);
+            
+            persistencia.GuardarVehiculos(lista);
+
+            JOptionPane.showMessageDialog(this, "¡Vehículo registrado exitosamente!");
+            
+            MenuTrabajador menu = new MenuTrabajador();
+            menu.setLocationRelativeTo(null);
+            menu.setVisible(true);
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error en campos numéricos. Verifique los datos.");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IngresarVehiculo anterior = new IngresarVehiculo();
+           anterior.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

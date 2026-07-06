@@ -3,12 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package GUI;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
 /**
  *
  * @author LENOVO
  */
 public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
+    
+    ArrayList<T> listaVehiculos = new ArrayList<>();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FinalizarAlquiler.class.getName());
 
@@ -17,6 +22,25 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public FinalizarAlquiler() {
         initComponents();
+    }
+    
+    public void EscribirAlquilados() {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); 
+
+        for (int i = 0; i < listaVehiculos.size(); i++) {
+            T v = listaVehiculos.get(i);
+            
+            if (v.isAlq()) { 
+                
+                modelo.addRow(new Object[]{
+                    v.getNroSerie(),               
+                    v.getClass().getSimpleName(),  // Columna 1: Tipo de Vehiculo
+                    "Datos en Alquiler.java",      // Columna 2: Nombre Cliente 
+                    "Datos en Alquiler.java"       // Columna 3: Fecha 
+                });
+            }
+        }
     }
 
     /**
@@ -47,14 +71,16 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Placa", "Vehiculo", "Nombre Cliente", "Fecha "
+                "N°Serie", "Vehiculo", "Nombre Cliente", "Fecha "
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton1.setText("Registrar devolución");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -81,40 +107,70 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jButton1))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MenuTrabajador menu = new MenuTrabajador();
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "¿Confirmar la devolución de este vehículo?", 
+                    "Registrar Devolución", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+                try {
+                    // Obtenemos el nroSerie de la tabla (Columna 0)
+                    String valorCelda = modelo.getValueAt(filaSeleccionada, 0).toString();
+                    int nroSerieSeleccionado = Integer.parseInt(valorCelda);
+
+                    // Buscamos el vehículo y cambiamos su estado
+                    for (T v : listaVehiculos) {
+                        if (v.getNroSerie() == nroSerieSeleccionado) {
+                            v.setAlq(false); // Liberamos el vehículo
+                            break;
+                        }
+                    }
+                    
+                    // Aquí llamarías a tu persistencia para guardar el cambio en el .dat
+                    // persistencia.GuardarVehiculos(listaVehiculos);
+                    
+
+                    // Actualizamos la tabla borrando la fila
+                    modelo.removeRow(filaSeleccionada);
+                    javax.swing.JOptionPane.showMessageDialog(this, "Devolución registrada exitosamente.");
+                    
+                } catch (Exception e) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error al registrar: " + e.getMessage());
+                }
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un alquiler de la tabla.");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FinalizarAlquiler().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

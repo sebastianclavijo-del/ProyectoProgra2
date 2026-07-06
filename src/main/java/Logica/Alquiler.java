@@ -2,11 +2,12 @@ package Logica;
 
 import ClasesMaestras.Vehiculo1;
 import ClasesMaestras.Persona1;
+import java.io.Serializable;
 /**
  *
  * @author USER
  */
-public class Alquiler {
+public class Alquiler implements Serializable{
     Vehiculo1 veh;
     Persona1 cli;
     int estacionfinal;      
@@ -21,6 +22,14 @@ public class Alquiler {
     Alquiler(){
     }
     
+    public ClasesMaestras.Vehiculo1 getVeh() {
+        return veh;
+    }
+
+    public ClasesMaestras.Persona1 getCli() {
+        return cli;
+    }
+    
     public boolean CrearAlquiler(){
         if(veh.getEstacion() != estacionfinal || veh.getAlq() == true){
             return false;
@@ -28,6 +37,7 @@ public class Alquiler {
             return true;
         }
     }
+    
     
     @Override
     public String toString(){

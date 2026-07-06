@@ -310,18 +310,81 @@ public class Alquiler extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void Ingresar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ingresar_AlquilerActionPerformed
-        LicenciaConducir lc = new LicenciaConducir();
-        lc.setNum(num);
-        lc.setFechaVencimiento(fechaVenc);
-        lc.setTipoLic(tipoLic);
-        ClienteSimple per = new ClienteSimple(); 
-        per.setIdCliente(idCliente);
-        per.setNombre(nombre);
-        per.setNumTelefono(numTel);
-        per.setFechaRegistro(fechaReg);
-        per.setDni(dni);
-        per.setAntecedente(ant);
-        per.setLicencia(lc);
+        try {
+            // 1. Extraemos los textos de la interfaz AL MOMENTO DE HACER CLIC
+            String txtNombre = T_Nombre.getText();
+            String txtID = T_IDCliente.getText();
+            String txtTel = T_Telefono.getText();
+            String txtDNI = T_DNI.getText();
+            String txtFechaReg = T_Fecha.getText();
+            String txtNumLic = T_Numero.getText();
+            String txtTipoLic = T_Tipo.getText();
+            String txtFechaVenc = T_Fecha_Vencimiento.getText();
+
+            RevisionTextoVacio(txtNombre);
+            RevisionTextoDig(txtNombre);
+            Comienzo(txtNombre);
+            
+            RevisionTextoVacio(txtID);
+            RevisionTextoLet(txtID);
+            
+            RevisionTextoVacio(txtTel);
+            RevisionTextoLet(txtTel);
+            
+            RevisionTextoVacio(txtDNI);
+            RevisionTextoLet(txtDNI);
+            
+            RevisionTextoVacio(txtNumLic);
+            RevisionTextoLet(txtNumLic);
+            
+            FechaFormato(txtFechaReg);
+            FechaFormato(txtFechaVenc);
+
+            idCliente = Integer.parseInt(txtID);
+            dni = Integer.parseInt(txtDNI);
+            num = Integer.parseInt(txtNumLic);
+
+            LicenciaConducir lc = new LicenciaConducir();
+            lc.setNum(num);
+            lc.setFechaVencimiento(txtFechaVenc);
+            lc.setTipoLic(txtTipoLic);
+            
+            ClienteSimple per = new ClienteSimple(); 
+            per.setIdCliente(idCliente);
+            per.setNombre(txtNombre);
+            per.setNumTelefono(txtTel);
+            per.setFechaRegistro(txtFechaReg);
+            per.setDni(dni);
+            per.setAntecedente(ant); 
+            per.setLicencia(lc);
+
+            
+            MovTransaccionales.ArregloCliente1 contenedorClientes = new MovTransaccionales.ArregloCliente1();
+
+            try { 
+            // 2. Usamos el nombre real del método (cargarClientes)
+            Persistencia.PersistenciaCliente.cargarClientes(contenedorClientes); 
+            } catch (Exception e) {
+               System.out.println("No se pudo cargar o archivo nuevo.");
+            }
+        
+            contenedorClientes.agregarCliente(per);
+        
+            Persistencia.PersistenciaCliente.guardarClientes(contenedorClientes);
+           
+
+            // 6. Navegación a la ventana de confirmación
+            AlquilerConfirmado ventanaConfirmacion = new AlquilerConfirmado();
+            ventanaConfirmacion.setLocationRelativeTo(null);
+            ventanaConfirmacion.setVisible(true);
+            this.dispose();
+
+        } catch (TextVacio | SinLetras | SinDigitos | CaractInicio | IllegalArgumentException | DateTimeParseException ex) {
+            // Si AL MENOS UNA validación falla, atrapamos el error y mostramos tu mensaje
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Validación", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error inesperado. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_Ingresar_AlquilerActionPerformed
 
     private void T_IDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_IDClienteActionPerformed

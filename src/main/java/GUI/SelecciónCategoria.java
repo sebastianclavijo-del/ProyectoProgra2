@@ -80,6 +80,11 @@ public class SelecciónCategoria extends javax.swing.JFrame {
         jLabel2.setText("Seleccione el tipo de vehículo que desea explorar:");
 
         jButton6.setText("Regresar al menú");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,6 +177,17 @@ ventanaScooters.setLocationRelativeTo(null);
 ventanaScooters.setVisible(true);
 this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        Inicio pantallaInicio = new Inicio();
+    
+        pantallaInicio.setLocationRelativeTo(null);
+    
+        pantallaInicio.setVisible(true);
+    
+        this.dispose();
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments

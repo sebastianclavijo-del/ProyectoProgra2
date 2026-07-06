@@ -111,7 +111,7 @@ public class IngresoBicicleta extends javax.swing.JFrame {
 
         jLabel5.setText("Porcentaje de bateria");
 
-        jButton1.setText("Ingresar Bicicleta");
+        jButton1.setText("Siguiente");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -119,6 +119,11 @@ public class IngresoBicicleta extends javax.swing.JFrame {
         });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         T_Tipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,7 +179,7 @@ public class IngresoBicicleta extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(70, 70, 70))
         );
@@ -210,7 +215,39 @@ public class IngresoBicicleta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        try {
+            // 1. Validaciones previas
+            if (T_Tipo.getText().isEmpty() || T_TipoM.getText().isEmpty() || 
+                T_Pan.getText().isEmpty() || T_PorcBat.getText().isEmpty()) {
+                throw new TextVacio("Todos los campos son obligatorios.");
+            }
+
+            // 2. Validación de "Pantalla" (Si o No)
+            String pantalla = T_Pan.getText().trim().toLowerCase();
+            if (!pantalla.equals("si") && !pantalla.equals("no") && !pantalla.equals("sí")) {
+                throw new IllegalArgumentException("Error: Ingrese 'si' o 'no' en el campo Pantalla.");
+            }
+
+            // 3. Instanciamos la siguiente pantalla
+            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+            
+            // 4. PASO DE DATOS: Asegúrate de tener estos setters en IngresoDatosGenerales
+            // ventanaDatos.setTipo(Integer.parseInt(T_Tipo.getText()));
+            // ventanaDatos.setTipoMotor(Integer.parseInt(T_TipoM.getText()));
+            // ventanaDatos.setPantalla(pantalla.equals("si") || pantalla.equals("sí"));
+            // ventanaDatos.setPorcentajeBateria(Integer.parseInt(T_PorcBat.getText()));
+            
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setVisible(true);
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Los campos Tipo, Tipo de Motor y Porcentaje deben ser numéricos.");
+        } catch (TextVacio | IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al avanzar: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void T_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_TipoActionPerformed
@@ -287,6 +324,14 @@ public class IngresoBicicleta extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_T_PorcBatActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IngresarVehiculo ventanaSeleccion = new IngresarVehiculo();
+        ventanaSeleccion.setLocationRelativeTo(null);
+        ventanaSeleccion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

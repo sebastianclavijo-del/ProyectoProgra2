@@ -4,12 +4,22 @@
  */
 package GUI;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.IOException;
+import Logica.Alquiler;
+
 /**
  *
  * @author LENOVO
  */
 public class GenerarReportes extends javax.swing.JFrame {
     
+    ArrayList<Logica.Alquiler> listaAlquileres = new ArrayList<>();
+     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(GenerarReportes.class.getName());
 
     /**
@@ -17,6 +27,34 @@ public class GenerarReportes extends javax.swing.JFrame {
      */
     public GenerarReportes() {
         initComponents();
+        this.setLocationRelativeTo(null); // Centrar ventana
+        
+        try {
+            FileInputStream archivoFisico = new FileInputStream("alquileres.dat");
+            
+            ObjectInputStream flujoEntrada = new ObjectInputStream(archivoFisico);
+            
+            listaAlquileres = (ArrayList<Alquiler>) flujoEntrada.readObject();
+            
+            flujoEntrada.close();
+            archivoFisico.close();
+            
+        } catch (IOException e) {
+            listaAlquileres = new ArrayList<>();
+            System.out.println("Archivo de alquileres no encontrado. Iniciando lista nueva.");
+        } catch (ClassNotFoundException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error de compatibilidad con la clase Alquiler.");
+        }
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { 
+            "Todos los registros", 
+            "Filtrar por DNI", 
+            "Filtrar por Fechas" 
+        }));
+
+        jTextField1.setEnabled(false); // DNI
+        jTextField2.setEnabled(false); // Fecha Inicio
+        jTextField3.setEnabled(false); // Fecha Fin
     }
 
     /**
@@ -70,6 +108,7 @@ public class GenerarReportes extends javax.swing.JFrame {
         jTextField3.setText("jTextField3");
 
         jButton1.setText("Generar Reporte");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Resultados");
@@ -82,12 +121,13 @@ public class GenerarReportes extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Vehiculo(marca/modelo)", "placa", "Cliente", "Salida", "Fin"
+                "Vehiculo(marca/modelo)", "N°Serie", "Cliente", "Salida", "Fin"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -139,12 +179,12 @@ public class GenerarReportes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -167,7 +207,90 @@ public class GenerarReportes extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        String seleccion = jComboBox1.getSelectedItem().toString();
+        
+        jTextField1.setText(""); 
+        jTextField2.setText(""); 
+        jTextField3.setText("");
+
+        if (seleccion.equals("Todos los registros")) {
+            jTextField1.setEnabled(false);
+            jTextField2.setEnabled(false);
+            jTextField3.setEnabled(false);
+        } else if (seleccion.equals("Filtrar por DNI")) {
+            jTextField1.setEnabled(true);
+            jTextField2.setEnabled(false);
+            jTextField3.setEnabled(false);
+        } else if (seleccion.equals("Filtrar por Fechas")) {
+            jTextField1.setEnabled(false);
+            jTextField2.setEnabled(true);
+            jTextField3.setEnabled(true);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MenuTrabajador menu = new MenuTrabajador();
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0); 
+        
+        String filtro = jComboBox1.getSelectedItem().toString();
+        
+        try {
+            boolean hayResultados = false; 
+
+            for (int i = 0; i < listaAlquileres.size(); i++) {
+                Logica.Alquiler alq = listaAlquileres.get(i);
+                boolean coincide = false;
+
+                if (filtro.equals("Todos los registros")) {
+                    coincide = true; 
+                } 
+                else if (filtro.equals("Filtrar por DNI")) {
+                    String dniBuscado = jTextField1.getText().trim();
+                    
+                    if (alq.getCli() instanceof Logica.ClienteSimple) {
+                        
+                        Logica.ClienteSimple clienteReal = (Logica.ClienteSimple) alq.getCli();
+                        
+                        if (String.valueOf(clienteReal.getDni()).equals(dniBuscado)) {
+                            coincide = true;
+                        }
+                    }
+                }
+                else if (filtro.equals("Filtrar por Fechas")) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "El sistema actual no registra fechas de alquiler.");
+                    return;
+                }
+
+                if (coincide) {
+                    hayResultados = true;
+                    
+                    modelo.addRow(new Object[]{
+                        "Vehículo N°" + alq.getVeh().getNroSerie(), 
+                        alq.getVeh().getNroSerie(),                 
+                        alq.getCli().getNombre(),                   
+                        "No registrado",                            
+                        "No registrado"                            
+                    });
+                }
+            }
+            
+            if (!hayResultados) {
+                javax.swing.JOptionPane.showMessageDialog(this, "No se encontraron registros con ese filtro.");
+            }
+            
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

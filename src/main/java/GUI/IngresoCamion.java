@@ -135,6 +135,11 @@ public class IngresoCamion extends javax.swing.JFrame {
         });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -192,6 +197,36 @@ public class IngresoCamion extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        try {
+            // 1. Validar que los campos no estén vacíos
+            if(T_NroEjes.getText().isEmpty() || T_Carga.getText().isEmpty() || T_TipoR.getText().isEmpty()) {
+                throw new TextVacio("Todos los campos son obligatorios.");
+            }
+            
+            // 2. Intentar convertir a tipos de datos correspondientes
+            int ejes = Integer.parseInt(T_NroEjes.getText());
+            double carga = Double.parseDouble(T_Carga.getText());
+            String tipoRemolque = T_TipoR.getText();
+            
+            // 3. Instanciar la siguiente pantalla
+            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+            
+            // 4. PASO DE DATOS (Asegúrate de tener estos setters en IngresoDatosGenerales)
+            // ventanaDatos.setNroEjes(ejes);
+            // ventanaDatos.setCargaNeta(carga);
+            // ventanaDatos.setTipoRemolque(tipoRemolque);
+            
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setVisible(true);
+            this.dispose();
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Número de ejes y Carga deben ser valores numéricos.");
+        } catch (TextVacio e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al avanzar: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void T_NroEjesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_NroEjesActionPerformed
@@ -247,6 +282,14 @@ public class IngresoCamion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_T_TipoRActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IngresarVehiculo ventanaSeleccion = new IngresarVehiculo();
+        ventanaSeleccion.setLocationRelativeTo(null);
+        ventanaSeleccion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

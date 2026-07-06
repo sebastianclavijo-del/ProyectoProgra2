@@ -98,6 +98,7 @@ public class EliminoBicicleta<T extends Vehiculo1> extends javax.swing.JFrame {
         B_Eliminar.addActionListener(this::B_EliminarActionPerformed);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,6 +169,14 @@ public class EliminoBicicleta<T extends Vehiculo1> extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un auto en la tabla primero.");
         }
     }//GEN-LAST:event_B_EliminarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MenuTrabajador menu = new MenuTrabajador();
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

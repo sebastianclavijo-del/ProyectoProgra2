@@ -130,6 +130,7 @@ public class EliminoCamión<T extends Vehiculo1> extends javax.swing.JFrame {
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Salir");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -169,7 +170,42 @@ public class EliminoCamión<T extends Vehiculo1> extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+    
+        int filaSeleccionada = jTable1.getSelectedRow();
+
+        if (filaSeleccionada != -1) {
+
+            int confirmacion = javax.swing.JOptionPane.showConfirmDialog(this, 
+                    "¿Estás seguro de que deseas eliminar este auto?", 
+                    "Confirmar", 
+                    javax.swing.JOptionPane.YES_NO_OPTION);
+
+            if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+
+                //ELIMINAMOS DEL ARRAYLIST (Lógica)
+                int nroserie = (int) modelo.getValueAt(filaSeleccionada, 0);
+                eliminarDeLaListaLógica(nroserie); 
+
+                //ELIMINAMOS DEL JTABLE (Vista)
+                modelo.removeRow(filaSeleccionada);
+
+                javax.swing.JOptionPane.showMessageDialog(this, "Auto eliminado con éxito.");
+            }
+
+        } else {
+            // Si se intenta eliminar sin seleccionar nada, mostramos un aviso
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un auto en la tabla primero.");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        MenuTrabajador menu = new MenuTrabajador();
+        menu.setLocationRelativeTo(null);
+        menu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

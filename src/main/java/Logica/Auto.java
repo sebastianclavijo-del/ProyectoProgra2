@@ -43,13 +43,20 @@ public class Auto extends Vehiculo1{
         this.marca = marca;
     }
     //Constructores
-    Auto(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, int numPas, String pla, String mod, String mar){
-        super(anioFab, nSer, peso, est, vMax, al);
-        numPasajeros = numPas;
-        placa = pla;
-        modelo = mod;
-        marca = mar;
-    }
+    public Auto(String marca, String modelo, String placa, int numSerie, int peso, int estacion, int anio, double velMax) {
+    // Primero llamamos al constructor padre (Vehiculo1)
+    super(); 
+    
+    // Luego asignamos los valores. 
+    // ¡OJO! Ajusta los nombres de las variables si en Auto.java se llaman diferente
+    this.marca = marca;
+    this.modelo = modelo;
+    this.placa = placa;
+    this.nroSerie = numSerie;
+    this.peso = peso;
+    this.estacion = estacion;
+    // ... sigue asignando los demás según tus atributos
+}
     Auto(){
     }
     

@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author SEBASTIAN
  */
-public class CatAutos<T extends Vehiculo1> extends javax.swing.JFrame {
+public class CatAutos extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CatAutos.class.getName());
 
@@ -26,38 +26,44 @@ public class CatAutos<T extends Vehiculo1> extends javax.swing.JFrame {
     }
 
     private void cargarDatosDelArchivo() {
-        VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
-        ArrayList<Vehiculo1> listaRecuperada = new ArrayList<>();
-        try {
-            persistencia.RecuperarVehiculos(listaRecuperada);
-            // Cambia 'EscribirAuto' por EscribirScooter, EscribirBicicleta, etc.
-            EscribirAuto((ArrayList<T>) listaRecuperada); 
-        } catch (Exception e) {
-            System.err.println("Error al cargar los datos: " + e.getMessage());
-        }
-    }
-    
-    public void EscribirAuto(ArrayList<T> listaVehiculos) {
-    // Se obtiene el modelo de jTable1
-    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
-    
-    //Se limpia la tabla por si ya tenía datos antes
-    modelo.setRowCount(0);
-    
-    for (int i = 0; i < listaVehiculos.size(); i++) {
-        T vehiculo = listaVehiculos.get(i);
+       VehiculoPersistencia<Vehiculo1> persistencia = new VehiculoPersistencia<>();
+        ArrayList<Vehiculo1> listaCompleta = new ArrayList<>();
         
-        // 4. Verificar si es un Auto
-        if (vehiculo instanceof Auto) {
-            modelo.addRow(new Object[]{
-                ((Auto)vehiculo).getModelo(), 
-                ((Auto)vehiculo).getMarca(), 
-                ((Auto)vehiculo).getNumPasajeros(), 
-                ((Auto)vehiculo).getAnioFabricacion(), 
-                ((Auto)vehiculo).getEstacion()
-            });
+        try {
+            persistencia.RecuperarVehiculos(listaCompleta);
+            
+            // DIAGNÓSTICO
+            System.out.println("DEBUG: Se encontraron " + listaCompleta.size() + " vehículos.");
+            
+            for(Vehiculo1 v : listaCompleta) {
+                System.out.println("DEBUG: Vehículo encontrado en lista: " + v.toString());
+            }
+            
+            EscribirAuto(listaCompleta);
+            
+        } catch (Exception e) {
+            System.err.println("DEBUG: Error crítico: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+    
+    public void EscribirAuto(ArrayList<Vehiculo1> listaVehiculos) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        
+        for (Vehiculo1 vehiculo : listaVehiculos) {
+            // Filtramos solo los que son Auto
+            if (vehiculo instanceof Auto) {
+                Auto auto = (Auto) vehiculo;
+                modelo.addRow(new Object[]{
+                    auto.getModelo(), 
+                    auto.getMarca(), 
+                    auto.getNumPasajeros(), 
+                    auto.getAnioFabricacion(), 
+                    auto.getEstacion()
+                });
+            }
+        }
     }
     /**
      * This method is called from within the constructor to initialize the form.

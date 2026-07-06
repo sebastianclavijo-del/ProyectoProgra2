@@ -4,6 +4,8 @@
  */
 package GUI;
 
+import Excepciones.TextVacio;
+import javax.swing.JOptionPane;
 /**
  *
  * @author SEBASTIAN
@@ -68,8 +70,18 @@ public class IngresoScooter extends javax.swing.JFrame {
         jTextField5.setText("jTextField5");
 
         jButton1.setText("Siguiente");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Volver");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,6 +153,60 @@ public class IngresoScooter extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // 1. Validar campos vacíos
+            if(jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || 
+               jTextField3.getText().isEmpty() || jTextField4.getText().isEmpty() || 
+               jTextField5.getText().isEmpty()) {
+                throw new TextVacio("Todos los campos son obligatorios.");
+            }
+
+            // 2. Validar Booleanos (Plegable y Bluetooth)
+            String plegable = jTextField2.getText().trim().toLowerCase();
+            String bluetooth = jTextField4.getText().trim().toLowerCase();
+            
+            if ((!plegable.equals("si") && !plegable.equals("no")) || 
+                (!bluetooth.equals("si") && !bluetooth.equals("no"))) {
+                throw new IllegalArgumentException("Campos 'Plegable' y 'Bluetooth' deben ser 'si' o 'no'.");
+            }
+
+            // 3. Convertir números
+            double diametro = Double.parseDouble(jTextField3.getText());
+            int bateria = Integer.parseInt(jTextField5.getText());
+
+            // 4. Instanciar siguiente pantalla y pasar datos
+            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+            
+            // Asumiendo que definiste estos setters en IngresoDatosGenerales:
+            // ventanaDatos.setMarca(jTextField1.getText());
+            // ventanaDatos.setPlegable(plegable.equals("si"));
+            // ventanaDatos.setDiametro(diametro);
+            // ventanaDatos.setBluetooth(bluetooth.equals("si"));
+            // ventanaDatos.setBateria(bateria);
+
+            ventanaDatos.setLocationRelativeTo(null);
+            ventanaDatos.setVisible(true);
+            this.dispose();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Diámetro y Porcentaje deben ser números.");
+        } catch (TextVacio | IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        IngresarVehiculo ventanaSeleccion = new IngresarVehiculo();
+        ventanaSeleccion.setLocationRelativeTo(null);
+        ventanaSeleccion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

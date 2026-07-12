@@ -29,17 +29,19 @@ public class VehiculoPersistencia<T>{
         }
     }
     
-    public void RecuperarVehiculos(ArrayList<T> veh) throws FileNotFoundException, ClassNotFoundException{
+    public void RecuperarVehiculos(ArrayList<T> veh){
         try{
             FileInputStream o = new FileInputStream("Vehiculo.dat");
             ObjectInputStream p = new ObjectInputStream(o);
-            while(p.readObject() != null){
-                veh.add((T)(Vehiculo1)p.readObject());
+            while (true) {
+            T vehiculoRecuperado = (T) p.readObject();
+            veh.add(vehiculoRecuperado);
+        }
+        }catch(EOFException e){
+            for(int i=0; i<veh.size(); i++){
+            System.out.println(veh.get(i).toString());
             }
-            for(int i=0;i<veh.size();i++){
-                System.out.println((String)veh.get(i).toString());
-            }
-        }catch(IOException e){
+        }catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

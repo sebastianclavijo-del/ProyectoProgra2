@@ -15,6 +15,12 @@ public class ContenedorAlquiler {
         cab = null;
     }
     
+    public Nodo getCab() {              
+        return cab;
+    }
+    public void setCab(Nodo cab) {      
+        this.cab = cab;
+    }   
     public void AgregarAlquiler(Alquiler dato){
         Nodo n = new Nodo();
         n.dato = dato;

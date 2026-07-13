@@ -12,6 +12,9 @@ public class Alquiler implements Serializable{
     Persona1 cli;
     int estacionfinal;      
     int tipoPago;
+    String fechaInicio;
+    String fechaFin = "-";
+            
     
     Alquiler(Vehiculo1 v, Persona1 p, int ef, int tp){
         this.veh = v;
@@ -19,6 +22,14 @@ public class Alquiler implements Serializable{
         this.estacionfinal = ef;
         this.tipoPago = tp;
     }
+    
+    public Alquiler(Vehiculo1 v, Persona1 p, String fechaInicio){
+        this.veh = v;
+        this.cli = p;
+        this.fechaInicio = fechaInicio;
+    }
+    
+    
     Alquiler(){
     }
     
@@ -30,6 +41,23 @@ public class Alquiler implements Serializable{
         return cli;
     }
     
+    public String getFechaInicio() {          // <-- agregar
+        return fechaInicio;
+    }
+    public void setFechaInicio(String fechaInicio) {   // <-- agregar
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFin() {              // <-- agregar
+        return fechaFin;
+    }
+    public void setFechaFin(String fechaFin) {  // <-- agregar
+        this.fechaFin = fechaFin;
+    }
+
+    public boolean isActivo() {                 // <-- agregar
+        return fechaFin == null || fechaFin.equals("-");
+    }
     public boolean CrearAlquiler(){
         if(veh.getEstacion() != estacionfinal || veh.getAlq() == true){
             return false;

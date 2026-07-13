@@ -176,9 +176,20 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
                     
                    VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
                     persistencia.GuardarVehiculos(listaVehiculos);
-                    
+                    Persistencia.AlquilerPersistencia persistenciaAlq = new Persistencia.AlquilerPersistencia();
+                    Logica.Nodo cabAlquileres = persistenciaAlq.RecuperarAlquiler();
+                    Logica.Nodo actual = cabAlquileres;
+                    String fechaHoy = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+                    while (actual != null) {
+                        Logica.Alquiler a = actual.dato;
+                        if (a.isActivo() && a.getVeh().getNroSerie() == nroSerieSeleccionado) {
+                            a.setFechaFin(fechaHoy);
+                            break;
+                        }
+                    actual = actual.sig;
+                    }
+                    persistenciaAlq.GuardarAlquiler(cabAlquileres);
 
-                    // Actualizamos la tabla borrando la fila
                     modelo.removeRow(filaSeleccionada);
                     javax.swing.JOptionPane.showMessageDialog(this, "Devolución registrada exitosamente.");
                     

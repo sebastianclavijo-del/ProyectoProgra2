@@ -381,23 +381,36 @@ public class Alquiler extends javax.swing.JFrame {
         
             Persistencia.PersistenciaCliente.guardarClientes(contenedorClientes);
             if (vehiculoSeleccionado != null) {
-                Persistencia.VehiculoPersistencia<Vehiculo1> persistenciaVeh = new Persistencia.VehiculoPersistencia<>();
-                ArrayList<Vehiculo1> todosLosVehiculos = new ArrayList<>();
-                persistenciaVeh.RecuperarVehiculos(todosLosVehiculos);
+    Persistencia.VehiculoPersistencia<Vehiculo1> persistenciaVeh = new Persistencia.VehiculoPersistencia<>();
+    ArrayList<Vehiculo1> todosLosVehiculos = new ArrayList<>();
+    persistenciaVeh.RecuperarVehiculos(todosLosVehiculos);
 
-                for (Vehiculo1 v : todosLosVehiculos) {
-                    if (v.getNroSerie() == vehiculoSeleccionado.getNroSerie()) {
-                        v.setAlq(true);
-                        v.setIdClienteAlquiler(idCliente);
-                        v.setFechaAlquiler(txtFechaReg);   // <-- agregar: la fecha que escribiste en "Fecha", NO en "Fecha de vencimiento"
-                        break;
-                    }
-                }
+    Vehiculo1 vehiculoActualizado = null;   // <-- nuevo
+    for (Vehiculo1 v : todosLosVehiculos) {
+        if (v.getNroSerie() == vehiculoSeleccionado.getNroSerie()) {
+            v.setAlq(true);
+            v.setIdClienteAlquiler(idCliente);
+            v.setFechaAlquiler(txtFechaReg);
+            vehiculoActualizado = v;         // <-- nuevo
+            break;
+        }
+    }
 
-                persistenciaVeh.GuardarVehiculos(todosLosVehiculos);
-            } else {
-                System.out.println("Aviso: no se recibió el vehículo seleccionado; no se marcó como alquilado.");
+    persistenciaVeh.GuardarVehiculos(todosLosVehiculos);
+
+    // NUEVO: registrar el alquiler en el historial (alquileres.dat)
+        if (vehiculoActualizado != null) {
+            Persistencia.AlquilerPersistencia persistenciaAlq = new Persistencia.AlquilerPersistencia();
+            Logica.Nodo cabExistente = persistenciaAlq.RecuperarAlquiler();
+            MovTransaccionales.ContenedorAlquiler contenedorAlq = new MovTransaccionales.ContenedorAlquiler();
+            contenedorAlq.setCab(cabExistente);
+            Logica.Alquiler nuevoAlquiler = new Logica.Alquiler(vehiculoActualizado, per, txtFechaReg);
+            contenedorAlq.AgregarAlquiler(nuevoAlquiler);
+                persistenciaAlq.GuardarAlquiler(contenedorAlq.getCab());
             }
+        } else {
+            System.out.println("Aviso: no se recibió el vehículo seleccionado; no se marcó como alquilado.");
+        }
            
 
             // 6. Navegación a la ventana de confirmación

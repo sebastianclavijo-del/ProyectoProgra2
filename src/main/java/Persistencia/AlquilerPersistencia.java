@@ -16,7 +16,7 @@ public class AlquilerPersistencia {
     
     public void GuardarAlquiler(Nodo cab){
         try{
-            FileOutputStream o = new FileOutputStream("Alquiler.dat");
+            FileOutputStream o = new FileOutputStream("alquileres.dat");
             ObjectOutputStream p = new ObjectOutputStream(o);
             while(cab != null){
                 p.writeObject(cab.dato);
@@ -33,7 +33,7 @@ public class AlquilerPersistencia {
         Nodo nuevaCab = null;
         Nodo ultimo = null;
         
-        try (ObjectInputStream p = new ObjectInputStream(new FileInputStream("Alquiler.dat"))) {
+        try (ObjectInputStream p = new ObjectInputStream(new FileInputStream("alquileres.dat"))) {
             while (true) {
                 Alquiler alq = (Alquiler) p.readObject();
                 Nodo n = new Nodo();

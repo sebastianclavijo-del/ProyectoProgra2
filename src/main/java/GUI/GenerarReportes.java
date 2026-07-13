@@ -29,32 +29,24 @@ public class GenerarReportes extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null); // Centrar ventana
         
-        try {
-            FileInputStream archivoFisico = new FileInputStream("alquileres.dat");
-            
-            ObjectInputStream flujoEntrada = new ObjectInputStream(archivoFisico);
-            
-            listaAlquileres = (ArrayList<Alquiler>) flujoEntrada.readObject();
-            
-            flujoEntrada.close();
-            archivoFisico.close();
-            
-        } catch (IOException e) {
-            listaAlquileres = new ArrayList<>();
-            System.out.println("Archivo de alquileres no encontrado. Iniciando lista nueva.");
-        } catch (ClassNotFoundException e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error de compatibilidad con la clase Alquiler.");
-        }
+        Persistencia.AlquilerPersistencia persistenciaAlq = new Persistencia.AlquilerPersistencia();
+    Logica.Nodo cabAlquileres = persistenciaAlq.RecuperarAlquiler();
+    listaAlquileres = new ArrayList<>();
+    Logica.Nodo actual = cabAlquileres;
+    while (actual != null) {
+        listaAlquileres.add(actual.dato);
+        actual = actual.sig;
+    }
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { 
-            "Todos los registros", 
-            "Filtrar por DNI", 
-            "Filtrar por Fechas" 
-        }));
+    jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { 
+        "Todos los registros", 
+        "Filtrar por DNI", 
+        "Filtrar por Fechas" 
+    }));
 
-        jTextField1.setEnabled(false); // DNI
-        jTextField2.setEnabled(false); // Fecha Inicio
-        jTextField3.setEnabled(false); // Fecha Fin
+    jTextField1.setEnabled(false); // DNI
+    jTextField2.setEnabled(false); // Fecha Inicio
+    jTextField3.setEnabled(false); // Fecha Fin
     }
 
     /**
@@ -267,21 +259,34 @@ public class GenerarReportes extends javax.swing.JFrame {
                     }
                 }
                 else if (filtro.equals("Filtrar por Fechas")) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "El sistema actual no registra fechas de alquiler.");
-                    return;
+                     String fechaInicioBuscada = jTextField2.getText().trim();
+                    String fechaFinBuscada = jTextField3.getText().trim();
+    
+                    try {
+                        java.time.format.DateTimeFormatter fmt = java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                        java.time.LocalDate ini = java.time.LocalDate.parse(fechaInicioBuscada, fmt);
+                        java.time.LocalDate fin = java.time.LocalDate.parse(fechaFinBuscada, fmt);
+                        java.time.LocalDate fechaAlq = java.time.LocalDate.parse(alq.getFechaInicio(), fmt);
+        
+                        if (!fechaAlq.isBefore(ini) && !fechaAlq.isAfter(fin)) {
+                            coincide = true;
+                        }
+                    } catch (Exception ex) {
+                        javax.swing.JOptionPane.showMessageDialog(this, "Formato de fecha inválido. Usa dd/MM/yyyy.");
+                        return;
+                    }
                 }
 
                 if (coincide) {
                     hayResultados = true;
-                    
+    
                     modelo.addRow(new Object[]{
-                        "Vehículo N°" + alq.getVeh().getNroSerie(), 
-                        alq.getVeh().getNroSerie(),                 
-                        alq.getCli().getNombre(),                   
-                        "No registrado",                            
-                        "No registrado"                            
-                    });
-                }
+                    alq.getVeh().getClass().getSimpleName(),
+                    alq.getVeh().getNroSerie(),                 
+                    alq.getCli().getNombre(),                   
+                    alq.getFechaInicio(),
+                    alq.getFechaFin()
+                    });                }
             }
             
             if (!hayResultados) {

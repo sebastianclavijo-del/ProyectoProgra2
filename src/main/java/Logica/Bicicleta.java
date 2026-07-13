@@ -46,7 +46,7 @@ public class Bicicleta extends Vehiculo1 implements VehElectrico{
     }
     
     //Constructor
-    Bicicleta(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean tipoMot, boolean pan, int tip){
+    Bicicleta(int anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean tipoMot, boolean pan, int tip){
         super(anioFab, nSer, peso, est, vMax, al);
         tipoMotor = tipoMot;
         pantalla = pan;

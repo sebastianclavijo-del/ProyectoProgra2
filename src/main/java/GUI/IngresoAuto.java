@@ -231,14 +231,8 @@ public class IngresoAuto extends javax.swing.JFrame {
             
             // 2. Instanciamos la siguiente pantalla
             IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
-            
-            // 3. AQUÍ ES DONDE PASAS LOS DATOS (Necesitarás que IngresoDatosGenerales tenga estos setters)
-            // ventanaDatos.setMarca(T_Marca.getText());
-            // ventanaDatos.setModelo(T_Modelo.getText());
-            // ventanaDatos.setPlaca(T_Placa.getText());
-            // ventanaDatos.setNumPasajeros(Integer.parseInt(T_NumPasaj.getText()));
-            
-            // 4. Hacemos visible la nueva ventana y cerramos la actual
+            ventanaDatos.setDatosPrevios(T_Marca.getText(), T_Modelo.getText(), T_Placa.getText());
+            ventanaDatos.setNumPasajeros(Integer.parseInt(T_NumPasaj.getText()));
             ventanaDatos.setLocationRelativeTo(null);
             ventanaDatos.setVisible(true);
             this.dispose();

@@ -4,11 +4,12 @@
  */
 package ClasesMaestras;
 
+import java.io.Serializable; 
 /**
  *
  * @author LENOVO
  */
-public abstract class Persona1 {
+public abstract class Persona1 implements Serializable{
     protected String nombre;
     protected int idCliente;
     protected String numTelefono;

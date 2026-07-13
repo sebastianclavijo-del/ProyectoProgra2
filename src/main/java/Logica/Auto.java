@@ -5,7 +5,6 @@
 package Logica;
 
 import java.util.*;
-
 import ClasesMaestras.Vehiculo1;
 /**
  *
@@ -43,20 +42,21 @@ public class Auto extends Vehiculo1{
         this.marca = marca;
     }
     //Constructores
-    public Auto(String marca, String modelo, String placa, int numSerie, int peso, int estacion, int anio, double velMax) {
-    // Primero llamamos al constructor padre (Vehiculo1)
-    super(); 
-    
-    // Luego asignamos los valores. 
-    // ¡OJO! Ajusta los nombres de las variables si en Auto.java se llaman diferente
+    public Auto(String marca, String modelo, String placa, int numSerie, int peso, int estacion, int anio, double velMax, int numPasajeros) {
+    super();
     this.marca = marca;
     this.modelo = modelo;
     this.placa = placa;
     this.nroSerie = numSerie;
     this.peso = peso;
     this.estacion = estacion;
-    // ... sigue asignando los demás según tus atributos
-}
+    this.velocidadMax = velMax;
+    this.numPasajeros = numPasajeros;
+    // anio: como anioFabricacion es de tipo Date, necesitas convertirlo, p.ej.:
+    // this.anioFabricacion = new java.util.Calendar.Builder().setDate(anio, 0, 1).build().getTime();
+    }
+
+    
     Auto(){
     }
     

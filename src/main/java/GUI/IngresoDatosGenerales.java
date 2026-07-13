@@ -16,13 +16,17 @@ import Logica.Auto;
  */
 public class IngresoDatosGenerales extends javax.swing.JFrame {
     private String marca, modelo, placa;
-private int numPasajeros;
+    private int numPasajeros;
 
     public void setDatosPrevios(String marca, String modelo, String placa) {
     this.marca = marca;
     this.modelo = modelo;
     this.placa = placa;
 }
+    public void setNumPasajeros(int numPasajeros) {
+    this.numPasajeros = numPasajeros;
+    }
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresoDatosGenerales.class.getName());
 
     /**
@@ -187,7 +191,7 @@ private int numPasajeros;
             } catch (Exception e) {
             }
             
-            Auto nuevoAuto = new Auto(this.marca, this.modelo, this.placa, numSerie, (int) peso, estacion, anio, velMax);            lista.add(nuevoAuto);
+            Auto nuevoAuto = new Auto(this.marca, this.modelo, this.placa, numSerie, (int) peso, estacion, anio, velMax, this.numPasajeros);            lista.add(nuevoAuto);
             
             persistencia.GuardarVehiculos(lista);
 

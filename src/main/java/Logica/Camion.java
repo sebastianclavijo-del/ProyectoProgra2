@@ -42,7 +42,7 @@ public class Camion extends Vehiculo1{
     }
     
     //Constructor
-    Camion(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, int nEje, double cNeta, String tRem){
+    Camion(int anioFab, int nSer,int peso, int est, double vMax, boolean al, int nEje, double cNeta, String tRem){
         super(anioFab, nSer, peso, est, vMax, al);
         numEjes = nEje;
         cargaNeta = cNeta;

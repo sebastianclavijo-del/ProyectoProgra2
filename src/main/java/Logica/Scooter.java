@@ -57,7 +57,7 @@ public class Scooter extends Vehiculo1 implements VehElectrico{
     }
     
     //Constructor
-    Scooter(Date anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean ple, boolean blue, double diam, String marca){
+    Scooter(int anioFab, int nSer,int peso, int est, double vMax, boolean al, boolean ple, boolean blue, double diam, String marca){
         super(anioFab, nSer, peso, est, vMax, al);
         plegable = ple;
         Bluetooth = blue;

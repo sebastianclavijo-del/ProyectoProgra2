@@ -6,21 +6,21 @@ package ClasesMaestras;
 
 import java.util.Date;
 import java.util.Scanner;
-
+import java.io.Serializable;
 /**
  *
  * @author USER
  */
-public abstract class Vehiculo1 {
-    protected Date anioFabricacion;
+public abstract class Vehiculo1 implements Serializable{
+    protected int anioFabricacion;
     protected int nroSerie, peso, estacion;
     protected double velocidadMax;
     protected boolean alq;
 
-    public Date getAnioFabricacion() {
+    public int getAnioFabricacion() {
         return anioFabricacion;
     }
-    public void setAnioFabricacion(Date anioFabricacion) {
+    public void setAnioFabricacion(int anioFabricacion) {
         this.anioFabricacion = anioFabricacion;
     }
 
@@ -59,8 +59,8 @@ public abstract class Vehiculo1 {
         this.alq = alq;
     }
     
-    public Vehiculo1(Date anioFab, int nSer, int pes, int est, double vMax, boolean al){
-        anioFabricacion = anioFab;
+    public Vehiculo1(int anio, int nSer, int pes, int est, double vMax, boolean al){
+        anioFabricacion = anio;
         nroSerie = nSer;
         peso = pes;
         estacion = est;

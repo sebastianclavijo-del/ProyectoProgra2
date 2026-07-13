@@ -16,6 +16,8 @@ import Persistencia.VehiculoPersistencia;
  */
 public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
     
+    private final ArrayList<T> vehiculosEnTabla = new ArrayList<>();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CatScooters.class.getName());
 
     /**
@@ -45,23 +47,24 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
         }
     }
     public void EscribirScooter(ArrayList<T> listaVehiculos) {
-    // Se obtiene el modelo de jTable1
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
     
     //Se limpia la tabla por si ya tenía datos antes
     modelo.setRowCount(0);
+    vehiculosEnTabla.clear();
     
     for (int i = 0; i < listaVehiculos.size(); i++) {
         T vehiculo = listaVehiculos.get(i);
         
-        // 4. Verificar si es un Auto
-        if (vehiculo instanceof Scooter) {
+        // Verificar si es un Scooter y que no esté ya alquilado
+        if (vehiculo instanceof Scooter && !vehiculo.isAlq()) {
             modelo.addRow(new Object[]{ 
                 ((Scooter)vehiculo).getDiametroRuedas(), 
                 ((Scooter)vehiculo).getPlegable(), 
                 ((Scooter)vehiculo).getVelocidaMax(), 
                 ((Scooter)vehiculo).getEstacion()
             });
+            vehiculosEnTabla.add(vehiculo);
         }
     }
     }
@@ -226,10 +229,11 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
                 "Aviso", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
         } else {
-            Alquiler ventanaAlquiler = new Alquiler();
+            T vehiculoSeleccionado = vehiculosEnTabla.get(filaSeleccionada);
+            Alquiler ventanaAlquiler = new Alquiler(vehiculoSeleccionado);
             ventanaAlquiler.setLocationRelativeTo(null);
             ventanaAlquiler.setVisible(true);
-            this.dispose(); 
+            this.dispose();  
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

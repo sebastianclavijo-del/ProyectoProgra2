@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CatAutos extends javax.swing.JFrame {
     
+    private final ArrayList<Auto> autosEnTabla = new ArrayList<>();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CatAutos.class.getName());
 
     /**
@@ -50,10 +52,10 @@ public class CatAutos extends javax.swing.JFrame {
     public void EscribirAuto(ArrayList<Vehiculo1> listaVehiculos) {
         javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
         modelo.setRowCount(0);
-        
+        autosEnTabla.clear();
+
         for (Vehiculo1 vehiculo : listaVehiculos) {
-            // Filtramos solo los que son Auto
-            if (vehiculo instanceof Auto) {
+            if (vehiculo instanceof Auto && !vehiculo.isAlq()) {
                 Auto auto = (Auto) vehiculo;
                 modelo.addRow(new Object[]{
                     auto.getModelo(), 
@@ -62,6 +64,7 @@ public class CatAutos extends javax.swing.JFrame {
                     auto.getAnioFabricacion(), 
                     auto.getEstacion()
                 });
+                autosEnTabla.add(auto);
             }
         }
     }
@@ -206,10 +209,11 @@ public class CatAutos extends javax.swing.JFrame {
                 "Aviso", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
         } else {
-            Alquiler ventanaAlquiler = new Alquiler();
+            Auto autoSeleccionado = autosEnTabla.get(filaSeleccionada);
+            Alquiler ventanaAlquiler = new Alquiler(autoSeleccionado);
             ventanaAlquiler.setLocationRelativeTo(null);
             ventanaAlquiler.setVisible(true);
-            this.dispose(); 
+            this.dispose();  
         }
     }//GEN-LAST:event_B_Iniciar_AlquilerActionPerformed
 

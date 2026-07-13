@@ -6,6 +6,7 @@ package GUI;
 import Logica.ClienteSimple;
 import Logica.LicenciaConducir;
 import ClasesMaestras.Persona1;
+import ClasesMaestras.Vehiculo1;
 import Excepciones.SinDigitos;
 import Excepciones.TextVacio;
 import Excepciones.CaractInicio;
@@ -13,6 +14,7 @@ import Excepciones.SinLetras;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
 /**
@@ -24,6 +26,8 @@ public class Alquiler extends javax.swing.JFrame {
     int idCliente, dni, num;
     boolean ant;
     
+    private Vehiculo1 vehiculoSeleccionado;
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Alquiler.class.getName());
 
     /**
@@ -31,6 +35,11 @@ public class Alquiler extends javax.swing.JFrame {
      */
     public Alquiler() {
         initComponents();
+    }
+    
+    public Alquiler(Vehiculo1 vehiculo) {
+        initComponents();
+        this.vehiculoSeleccionado = vehiculo;
     }
     
     public void RevisionTextoDig(String cad) throws SinDigitos{
@@ -371,6 +380,23 @@ public class Alquiler extends javax.swing.JFrame {
             contenedorClientes.agregarCliente(per);
         
             Persistencia.PersistenciaCliente.guardarClientes(contenedorClientes);
+            if (vehiculoSeleccionado != null) {
+                Persistencia.VehiculoPersistencia<Vehiculo1> persistenciaVeh = new Persistencia.VehiculoPersistencia<>();
+                ArrayList<Vehiculo1> todosLosVehiculos = new ArrayList<>();
+                persistenciaVeh.RecuperarVehiculos(todosLosVehiculos);
+
+                for (Vehiculo1 v : todosLosVehiculos) {
+                    if (v.getNroSerie() == vehiculoSeleccionado.getNroSerie()) {
+                        v.setAlq(true);
+                        v.setIdClienteAlquiler(idCliente);
+                        break;
+                    }
+                }
+
+                persistenciaVeh.GuardarVehiculos(todosLosVehiculos);
+            } else {
+                System.out.println("Aviso: no se recibió el vehículo seleccionado; no se marcó como alquilado.");
+            }
            
 
             // 6. Navegación a la ventana de confirmación

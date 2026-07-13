@@ -11,11 +11,19 @@ import java.io.Serializable;
  *
  * @author USER
  */
-public abstract class Vehiculo1 implements Serializable{
+public abstract class Vehiculo1 implements Serializable{    
     protected int anioFabricacion;
     protected int nroSerie, peso, estacion;
     protected double velocidadMax;
     protected boolean alq;
+    protected int idClienteAlquiler = -1;
+
+    public int getIdClienteAlquiler() {
+        return idClienteAlquiler;
+    }
+    public void setIdClienteAlquiler(int idClienteAlquiler) {
+        this.idClienteAlquiler = idClienteAlquiler;
+    }
 
     public int getAnioFabricacion() {
         return anioFabricacion;

@@ -14,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
  * @author SEBASTIAN
  */
 public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
+    
+    private final ArrayList<T> vehiculosEnTabla = new ArrayList<>();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CatBicicletas.class.getName());
 
     /**
@@ -37,17 +40,15 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
     }
     
     public void EscribirBicicleta(ArrayList<T> listaVehiculos) {
-    // Se obtiene el modelo de jTable1
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
     
-    //Se limpia la tabla por si ya tenía datos antes
     modelo.setRowCount(0);
+    vehiculosEnTabla.clear();
     
     for (int i = 0; i < listaVehiculos.size(); i++) {
         T vehiculo = listaVehiculos.get(i);
         
-        // 4. Verificar si es una Bicicleta
-        if (vehiculo instanceof Bicicleta) {
+        if (vehiculo instanceof Bicicleta && !vehiculo.isAlq()) {
             modelo.addRow(new Object[]{
                 ((Bicicleta)vehiculo).getTipo(), 
                 ((Bicicleta)vehiculo).getTipoMotor(), 
@@ -55,6 +56,7 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
                 ((Bicicleta)vehiculo).getEstacion(), 
                 ((Bicicleta)vehiculo).getEstacion()
             });
+            vehiculosEnTabla.add(vehiculo);
         }
     }
     }
@@ -158,10 +160,11 @@ public class CatBicicletas<T extends Vehiculo1> extends javax.swing.JFrame {
                 "Aviso", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
         } else {
-            Alquiler ventanaAlquiler = new Alquiler();
+            T vehiculoSeleccionado = vehiculosEnTabla.get(filaSeleccionada);
+            Alquiler ventanaAlquiler = new Alquiler(vehiculoSeleccionado);
             ventanaAlquiler.setLocationRelativeTo(null);
             ventanaAlquiler.setVisible(true);
-            this.dispose(); 
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

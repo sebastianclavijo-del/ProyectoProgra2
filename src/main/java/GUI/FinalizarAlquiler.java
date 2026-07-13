@@ -7,6 +7,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
+import ClasesMaestras.Persona1;
+import Persistencia.VehiculoPersistencia;
+import Persistencia.PersistenciaCliente;
+import MovTransaccionales.ArregloCliente1;
 /**
  *
  * @author LENOVO
@@ -14,6 +18,7 @@ import ClasesMaestras.Vehiculo1;
 public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
     
     ArrayList<T> listaVehiculos = new ArrayList<>();
+    ArregloCliente1 clientesCargados = new ArregloCliente1();
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FinalizarAlquiler.class.getName());
 
@@ -22,6 +27,22 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public FinalizarAlquiler() {
         initComponents();
+        cargarVehiculosDesdeArchivo();
+    }
+    
+    private void cargarVehiculosDesdeArchivo() {
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+        } catch (Exception e) {
+            System.out.println("No se pudieron cargar los vehículos: " + e.getMessage());
+        }
+        try {
+            PersistenciaCliente.cargarClientes(clientesCargados);
+        } catch (Exception e) {
+            System.out.println("No se pudieron cargar los clientes: " + e.getMessage());
+        }
+        EscribirAlquilados();
     }
     
     public void EscribirAlquilados() {
@@ -32,12 +53,15 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
             T v = listaVehiculos.get(i);
             
             if (v.isAlq()) { 
-                
+                Persona1 cliente = clientesCargados.buscarCliente(v.getIdClienteAlquiler());
+                String nombreCliente = (cliente != null) ? cliente.getNombre() : "Desconocido";
+                String fechaAlquiler = (cliente != null) ? cliente.getFechaRegistro() : "-";
+
                 modelo.addRow(new Object[]{
                     v.getNroSerie(),               
-                    v.getClass().getSimpleName(),  // Columna 1: Tipo de Vehiculo
-                    "Datos en Alquiler.java",      // Columna 2: Nombre Cliente 
-                    "Datos en Alquiler.java"       // Columna 3: Fecha 
+                    v.getClass().getSimpleName(),
+                    nombreCliente,
+                    fechaAlquiler
                 });
             }
         }
@@ -150,8 +174,8 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
                         }
                     }
                     
-                    // Aquí llamarías a tu persistencia para guardar el cambio en el .dat
-                    // persistencia.GuardarVehiculos(listaVehiculos);
+                   VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+                    persistencia.GuardarVehiculos(listaVehiculos);
                     
 
                     // Actualizamos la tabla borrando la fila

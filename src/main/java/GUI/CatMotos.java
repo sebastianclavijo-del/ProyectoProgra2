@@ -14,6 +14,8 @@ import Persistencia.VehiculoPersistencia;
  */
 public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
     
+    private final ArrayList<T> vehiculosEnTabla = new ArrayList<>();
+    
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CatMotos.class.getName());
 
     /**
@@ -42,23 +44,24 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
     }
     
     public void EscribirMoto(ArrayList<T> listaVehiculos) {
-    // Se obtiene el modelo de jTable1
     javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
     
     //Se limpia la tabla por si ya tenía datos antes
     modelo.setRowCount(0);
+    vehiculosEnTabla.clear();
     
     for (int i = 0; i < listaVehiculos.size(); i++) {
         T vehiculo = listaVehiculos.get(i);
         
-        // 4. Verificar si es un Auto
-        if (vehiculo instanceof Moto) {
+        // Verificar si es una Moto y que no esté ya alquilada
+        if (vehiculo instanceof Moto && !vehiculo.isAlq()) {
             modelo.addRow(new Object[]{ 
                 ((Moto)vehiculo).getTipo(), 
                 ((Moto)vehiculo).getCilindrada(), 
                 ((Moto)vehiculo).getManillar(), 
                 ((Moto)vehiculo).getEstacion()
             });
+            vehiculosEnTabla.add(vehiculo);
         }
     }
     }
@@ -164,11 +167,11 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
                 "Aviso", 
                 javax.swing.JOptionPane.WARNING_MESSAGE);
         } else {
-            // Si seleccionó una fila, procedemos a abrir la ventana
-            Alquiler ventanaAlquiler = new Alquiler();
+            T vehiculoSeleccionado = vehiculosEnTabla.get(filaSeleccionada);
+            Alquiler ventanaAlquiler = new Alquiler(vehiculoSeleccionado);
             ventanaAlquiler.setLocationRelativeTo(null);
             ventanaAlquiler.setVisible(true);
-            this.dispose(); // Cerramos el catálogo
+            this.dispose();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

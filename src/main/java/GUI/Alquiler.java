@@ -389,6 +389,7 @@ public class Alquiler extends javax.swing.JFrame {
                     if (v.getNroSerie() == vehiculoSeleccionado.getNroSerie()) {
                         v.setAlq(true);
                         v.setIdClienteAlquiler(idCliente);
+                        v.setFechaAlquiler(txtFechaReg);   // <-- agregar: la fecha que escribiste en "Fecha", NO en "Fecha de vencimiento"
                         break;
                     }
                 }

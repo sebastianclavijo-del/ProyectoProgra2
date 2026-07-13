@@ -17,6 +17,7 @@ public abstract class Vehiculo1 implements Serializable{
     protected double velocidadMax;
     protected boolean alq;
     protected int idClienteAlquiler = -1;
+    protected String fechaAlquiler = "-";
 
     public int getIdClienteAlquiler() {
         return idClienteAlquiler;
@@ -24,7 +25,12 @@ public abstract class Vehiculo1 implements Serializable{
     public void setIdClienteAlquiler(int idClienteAlquiler) {
         this.idClienteAlquiler = idClienteAlquiler;
     }
-
+    public String getFechaAlquiler() {         
+        return fechaAlquiler;
+    }
+    public void setFechaAlquiler(String fechaAlquiler) {   
+        this.fechaAlquiler = fechaAlquiler;
+    }
     public int getAnioFabricacion() {
         return anioFabricacion;
     }

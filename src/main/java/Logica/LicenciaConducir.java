@@ -1,9 +1,12 @@
 package Logica;
+
+import java.io.Serializable;
+
 /**
  *
  * @author USER
  */
-public class LicenciaConducir {
+public class LicenciaConducir implements Serializable{
     private int num;
     private String tipoLic;
     private String fechaVencimiento;

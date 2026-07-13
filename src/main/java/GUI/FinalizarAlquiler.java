@@ -55,7 +55,7 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
             if (v.isAlq()) { 
                 Persona1 cliente = clientesCargados.buscarCliente(v.getIdClienteAlquiler());
                 String nombreCliente = (cliente != null) ? cliente.getNombre() : "Desconocido";
-                String fechaAlquiler = (cliente != null) ? cliente.getFechaRegistro() : "-";
+                String fechaAlquiler = v.getFechaAlquiler();
 
                 modelo.addRow(new Object[]{
                     v.getNroSerie(),               

@@ -139,27 +139,40 @@ public class Alquiler extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         B_SI = new javax.swing.JButton();
         B_NO = new javax.swing.JButton();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
         jLabel1.setText("Alquiler");
 
+        jLabel2.setForeground(new java.awt.Color(255, 153, 51));
         jLabel2.setText("Nombre");
 
+        jLabel3.setForeground(new java.awt.Color(255, 153, 51));
         jLabel3.setText("IdCliente");
 
+        jLabel4.setForeground(new java.awt.Color(255, 153, 51));
         jLabel4.setText("Telefono");
 
+        jLabel5.setForeground(new java.awt.Color(255, 153, 51));
         jLabel5.setText("DNI");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 153, 51));
         jLabel6.setText("Datos de la licencia");
 
+        jLabel7.setForeground(new java.awt.Color(255, 153, 51));
         jLabel7.setText("Número");
 
+        jLabel8.setForeground(new java.awt.Color(255, 153, 51));
         jLabel8.setText("Tipo");
 
+        jLabel9.setForeground(new java.awt.Color(255, 153, 51));
         jLabel9.setText("Fecha de vencimiento");
 
         T_Nombre.addActionListener(this::T_NombreActionPerformed);
@@ -183,11 +196,13 @@ public class Alquiler extends javax.swing.JFrame {
         jButton2.setText("Salir");
         jButton2.addActionListener(this::jButton2ActionPerformed);
 
+        jLabel10.setForeground(new java.awt.Color(255, 153, 51));
         jLabel10.setText("Fecha");
 
         T_Fecha.setText("dd/mm/aaaa");
         T_Fecha.addActionListener(this::T_FechaActionPerformed);
 
+        jLabel11.setForeground(new java.awt.Color(255, 153, 51));
         jLabel11.setText("Antecedentes");
 
         B_SI.setText("SI");
@@ -196,15 +211,23 @@ public class Alquiler extends javax.swing.JFrame {
         B_NO.setText("NO");
         B_NO.addActionListener(this::B_NOActionPerformed);
 
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck.png"))); // NOI18N
+
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck2.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addContainerGap()
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
                 .addComponent(B_SI)
                 .addGap(40, 40, 40)
                 .addComponent(B_NO)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel15)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -213,9 +236,15 @@ public class Alquiler extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(B_SI)
-                    .addComponent(B_NO))
+                    .addComponent(B_NO)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoAlquiler2.png"))); // NOI18N
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoSalir.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -228,12 +257,13 @@ public class Alquiler extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(32, 32, 32)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(T_Fecha_Vencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 239, Short.MAX_VALUE)
-                                .addComponent(Ingresar_Alquiler))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
                                     .addComponent(jLabel3)
@@ -245,22 +275,27 @@ public class Alquiler extends javax.swing.JFrame {
                                     .addComponent(jLabel11))
                                 .addGap(50, 50, 50)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(T_Nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                                    .addComponent(T_Nombre)
                                     .addComponent(T_IDCliente)
                                     .addComponent(T_Telefono)
                                     .addComponent(T_DNI)
                                     .addComponent(T_Numero)
                                     .addComponent(T_Tipo)
                                     .addComponent(T_Fecha)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)
-                                .addComponent(T_Fecha_Vencimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Ingresar_Alquiler)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(155, 155, 155)
                         .addComponent(jLabel6)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(8, 8, 8))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -291,7 +326,7 @@ public class Alquiler extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,7 +343,9 @@ public class Alquiler extends javax.swing.JFrame {
                                         .addGap(18, 18, 18)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                             .addComponent(jButton2)
-                                            .addComponent(Ingresar_Alquiler)))
+                                            .addComponent(Ingresar_Alquiler)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel13)))
                                     .addComponent(jLabel9)))
                             .addComponent(jLabel8)))
                     .addComponent(jLabel7))
@@ -632,6 +669,10 @@ public class Alquiler extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

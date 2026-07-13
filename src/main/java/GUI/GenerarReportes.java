@@ -73,34 +73,42 @@ public class GenerarReportes extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
         jLabel1.setText("Reportes");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBox1.addActionListener(this::jComboBox1ActionPerformed);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 153, 51));
         jLabel2.setText("Filtro de busqueda");
 
+        jLabel3.setForeground(new java.awt.Color(255, 153, 51));
         jLabel3.setText("Seleccion el tipo de reporte");
 
+        jLabel4.setForeground(new java.awt.Color(255, 153, 51));
         jLabel4.setText("DNI del cliente:");
 
+        jLabel5.setForeground(new java.awt.Color(255, 153, 51));
         jLabel5.setText("Fecha inicio");
 
         jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
+        jLabel6.setForeground(new java.awt.Color(255, 153, 51));
         jLabel6.setText("Fecha fin");
 
-        jTextField3.setText("jTextField3");
+        jTextField3.addActionListener(this::jTextField3ActionPerformed);
 
         jButton1.setText("Generar Reporte");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 153, 51));
         jLabel7.setText("Resultados");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -118,6 +126,8 @@ public class GenerarReportes extends javax.swing.JFrame {
 
         jButton2.setText("Salir");
         jButton2.addActionListener(this::jButton2ActionPerformed);
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoSalir.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -159,6 +169,8 @@ public class GenerarReportes extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2)
                         .addGap(10, 10, 10)))
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -191,7 +203,9 @@ public class GenerarReportes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel8))
                 .addContainerGap())
         );
 
@@ -302,6 +316,10 @@ public class GenerarReportes extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -338,6 +356,7 @@ public class GenerarReportes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

@@ -33,6 +33,7 @@ public class ventanaConfirmacion extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 153, 51));
         jLabel1.setText("Proceso confirmado ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

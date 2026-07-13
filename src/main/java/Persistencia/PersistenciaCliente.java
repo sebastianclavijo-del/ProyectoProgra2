@@ -23,20 +23,20 @@ public class PersistenciaCliente {
    
     public static void guardarClientes(ArregloCliente1 contenedor) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_CLIENTES))) {
-            
-            int total = contenedor.cantidadClientes();
-            Object[] listaAGuardar = new Object[total];
-            for (int i = 0; i < total; i++) {
-                listaAGuardar[i] = contenedor.obtenerCliente(i);
-            }
-            
-            oos.writeObject(listaAGuardar);
-            
-            System.out.println("¡Datos de clientes serializados con éxito en " + ARCHIVO_CLIENTES + "!");
-            
-        } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo .dat: " + e.getMessage());
+        
+        int total = contenedor.cantidadClientes();
+        ClienteSimple[] listaAGuardar = new ClienteSimple[total];   // <-- cambio clave
+        for (int i = 0; i < total; i++) {
+            listaAGuardar[i] = (ClienteSimple) contenedor.obtenerCliente(i);
         }
+        
+        oos.writeObject(listaAGuardar);
+        
+        System.out.println("¡Datos de clientes serializados con éxito en " + ARCHIVO_CLIENTES + "!");
+        
+    } catch (IOException e) {
+        System.err.println("Error al escribir en el archivo .dat: " + e.getMessage());
+    }
     }
 
     /**

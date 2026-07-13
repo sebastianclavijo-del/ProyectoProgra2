@@ -25,8 +25,8 @@ public class CatScooters<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public CatScooters() {
         initComponents();
-        // Inmediatamente después de dibujar los componentes visuales, disparamos la lectura
         cargarDatosDelArchivo();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     // Método puente para extraer los datos del disco y pasarlos a tu tabla

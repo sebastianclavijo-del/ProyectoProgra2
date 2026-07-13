@@ -27,7 +27,8 @@ public class GenerarReportes extends javax.swing.JFrame {
      */
     public GenerarReportes() {
         initComponents();
-        this.setLocationRelativeTo(null); // Centrar ventana
+        this.setLocationRelativeTo(null); 
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
         
         Persistencia.AlquilerPersistencia persistenciaAlq = new Persistencia.AlquilerPersistencia();
     Logica.Nodo cabAlquileres = persistenciaAlq.RecuperarAlquiler();

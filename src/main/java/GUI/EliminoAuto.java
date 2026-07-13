@@ -23,6 +23,7 @@ public class EliminoAuto<T extends Vehiculo1> extends javax.swing.JFrame {
     public EliminoAuto() {
         initComponents();
         cargarDatosDelArchivo();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     private void cargarDatosDelArchivo() {

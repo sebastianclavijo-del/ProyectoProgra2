@@ -17,6 +17,7 @@ public class AlquilerConfirmado extends javax.swing.JFrame {
      */
     public AlquilerConfirmado() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

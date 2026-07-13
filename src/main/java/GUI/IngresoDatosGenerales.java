@@ -92,6 +92,7 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
      */
     public IngresoDatosGenerales() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

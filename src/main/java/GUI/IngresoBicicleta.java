@@ -24,6 +24,7 @@ public class IngresoBicicleta extends javax.swing.JFrame {
      */
     public IngresoBicicleta() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     public void RevisionTextoDig(String cad) throws SinDigitos{

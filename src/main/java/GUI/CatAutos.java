@@ -22,9 +22,10 @@ public class CatAutos extends javax.swing.JFrame {
     /**
      * Creates new form CatAutos
      */
-    public CatAutos() { // <- Cambia 'CatAutos' por el nombre de la ventana en la que estés
+    public CatAutos() { 
         initComponents();
         cargarDatosDelArchivo(); 
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     private void cargarDatosDelArchivo() {

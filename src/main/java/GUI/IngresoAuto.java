@@ -24,6 +24,7 @@ public class IngresoAuto extends javax.swing.JFrame {
      */
     public IngresoAuto() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     public void RevisionTextoDig(String cad) throws SinDigitos{

@@ -17,6 +17,7 @@ public class ventanaConfirmacion extends javax.swing.JFrame {
      */
     public ventanaConfirmacion() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

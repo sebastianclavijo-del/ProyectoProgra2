@@ -28,6 +28,7 @@ public class FinalizarAlquiler<T extends Vehiculo1> extends javax.swing.JFrame {
     public FinalizarAlquiler() {
         initComponents();
         cargarVehiculosDesdeArchivo();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     private void cargarVehiculosDesdeArchivo() {

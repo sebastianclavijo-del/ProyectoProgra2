@@ -17,6 +17,7 @@ public class MenuTrabajador extends javax.swing.JFrame {
      */
     public MenuTrabajador() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

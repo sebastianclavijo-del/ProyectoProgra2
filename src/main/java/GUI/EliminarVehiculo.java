@@ -17,6 +17,7 @@ public class EliminarVehiculo extends javax.swing.JFrame {
      */
     public EliminarVehiculo() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

@@ -35,6 +35,7 @@ public class Alquiler extends javax.swing.JFrame {
      */
     public Alquiler() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     public Alquiler(Vehiculo1 vehiculo) {

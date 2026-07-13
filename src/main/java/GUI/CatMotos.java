@@ -23,7 +23,8 @@ public class CatMotos<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public CatMotos() {
         initComponents();
-        cargarDatosDelArchivo(); // LLAMADA FALTANTE AGREGADA
+        cargarDatosDelArchivo(); 
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     // MÉTODO FALTANTE AGREGADO PARA LEER EL DISCO DURO

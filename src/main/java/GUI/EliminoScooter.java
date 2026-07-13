@@ -23,6 +23,7 @@ public class EliminoScooter<T extends Vehiculo1> extends javax.swing.JFrame {
     public EliminoScooter() {
         initComponents();
         cargarDatosDelArchivo(); 
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
     
     private void cargarDatosDelArchivo() {  
@@ -164,12 +165,13 @@ public class EliminoScooter<T extends Vehiculo1> extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
-                    .addComponent(jButton2)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton2)
+                        .addComponent(jLabel2)
+                        .addComponent(jLabel3)))
                 .addGap(7, 7, 7))
         );
 

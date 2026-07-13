@@ -22,6 +22,7 @@ public class IngresoMoto extends javax.swing.JFrame {
      */
     public IngresoMoto() {
         initComponents();
+        getContentPane().setBackground(new java.awt.Color(139, 69, 19));
     }
 
     /**

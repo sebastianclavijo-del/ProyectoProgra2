@@ -7,7 +7,7 @@ package GUI;
 import ClasesMaestras.Vehiculo1;
 import Logica.Scooter;
 import java.util.ArrayList;
-
+import Persistencia.VehiculoPersistencia;
 /**
  *
  * @author LENOVO
@@ -22,6 +22,17 @@ public class EliminoScooter<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public EliminoScooter() {
         initComponents();
+        cargarDatosDelArchivo(); 
+    }
+    
+    private void cargarDatosDelArchivo() {  
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+            EscribirScooter();
+        } catch (Exception e) {
+            System.err.println("Error al cargar vehículos: " + e.getMessage());
+        }
     }
     
     public void EscribirScooter() {
@@ -58,6 +69,8 @@ public class EliminoScooter<T extends Vehiculo1> extends javax.swing.JFrame {
                 }
             }
         }
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();  
+        persistencia.GuardarVehiculos(listaVehiculos);  
     }
     
     /**

@@ -97,11 +97,9 @@ public class GenerarReportes extends javax.swing.JFrame {
 
         jLabel4.setText("DNI del cliente:");
 
-        jTextField1.setText("jTextField1");
-
         jLabel5.setText("Fecha inicio");
 
-        jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(this::jTextField2ActionPerformed);
 
         jLabel6.setText("Fecha fin");
 
@@ -291,6 +289,10 @@ public class GenerarReportes extends javax.swing.JFrame {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al generar el reporte: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments

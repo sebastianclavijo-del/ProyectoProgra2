@@ -8,6 +8,8 @@ import Logica.Bicicleta;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
 import Logica.Auto;
+import Persistencia.VehiculoPersistencia;
+
 
 /**
  *
@@ -23,6 +25,17 @@ public class EliminoBicicleta<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public EliminoBicicleta() {
         initComponents();
+        cargarDatosDelArchivo();
+    }
+    
+    private void cargarDatosDelArchivo() {  
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+            EscribirBicicleta(listaVehiculos);
+        } catch (Exception e) {
+            System.err.println("Error al cargar vehículos: " + e.getMessage());
+        }
     }
     
     public void EscribirBicicleta(ArrayList<T> listaVehiculos) {
@@ -59,6 +72,8 @@ public class EliminoBicicleta<T extends Vehiculo1> extends javax.swing.JFrame {
                 }
             }
         }
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();  
+        persistencia.GuardarVehiculos(listaVehiculos);
     }
     
     /**

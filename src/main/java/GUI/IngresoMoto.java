@@ -50,15 +50,15 @@ public class IngresoMoto extends javax.swing.JFrame {
 
         jLabel2.setText("Tipo (estandar(1), cruiser(2), deportivo(3),     off-road(4), doble proposito(5))");
 
-        jTextField1.setText("jTextField1");
-
         jLabel3.setText("Tipo de manillar: recto(1), riser(2), clip-on(3)");
 
-        jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Cilindraje");
-
-        jTextField3.setText("jTextField3");
 
         jButton1.setText("Siguiente");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +172,10 @@ public class IngresoMoto extends javax.swing.JFrame {
         ventanaSeleccion.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments

@@ -7,6 +7,8 @@ package GUI;
 import Logica.Auto;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
+import Persistencia.VehiculoPersistencia;   
+
 /**
  *
  * @author LENOVO
@@ -20,6 +22,17 @@ public class EliminoAuto<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public EliminoAuto() {
         initComponents();
+        cargarDatosDelArchivo();
+    }
+    
+    private void cargarDatosDelArchivo() {
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+            EscribirAuto(listaVehiculos);
+        } catch (Exception e) {
+            System.err.println("Error al cargar vehículos: " + e.getMessage());
+        }
     }
     
     public void EscribirAuto(ArrayList<T> listaVehiculos) {
@@ -50,12 +63,14 @@ public class EliminoAuto<T extends Vehiculo1> extends javax.swing.JFrame {
             T v = listaVehiculos.get(i);
             if (v instanceof Auto) {
                 Auto auto = (Auto) v;
-                if (auto.getPlaca().equals(placa)) { 
+                if (auto.getPlaca().equals(placa)) {
                     listaVehiculos.remove(i);
                     break;
                 }
             }
         }
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        persistencia.GuardarVehiculos(listaVehiculos);
     }
     
     /**

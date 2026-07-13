@@ -7,6 +7,7 @@ package GUI;
 import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
 import Logica.Camion;
+import Persistencia.VehiculoPersistencia;
 
 /**
  *
@@ -22,6 +23,17 @@ public class EliminoCamión<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public EliminoCamión() {
         initComponents();
+        cargarDatosDelArchivo();
+    }
+    
+    private void cargarDatosDelArchivo() {  
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+            EscribirCamión();
+        } catch (Exception e) {
+            System.err.println("Error al cargar vehículos: " + e.getMessage());
+        }
     }
     
     public void EscribirCamión() {
@@ -58,6 +70,8 @@ public class EliminoCamión<T extends Vehiculo1> extends javax.swing.JFrame {
                 }
             }
         }
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();  
+        persistencia.GuardarVehiculos(listaVehiculos);                        
     }
     
     private void B_EliminarActionPerformed(java.awt.event.ActionEvent evt) {                                           

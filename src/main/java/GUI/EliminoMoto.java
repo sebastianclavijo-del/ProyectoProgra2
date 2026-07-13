@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import ClasesMaestras.Vehiculo1;
 import Logica.Camion;
 import Logica.Moto;
+import Persistencia.VehiculoPersistencia;
+
 /**
  *
  * @author LENOVO
@@ -22,6 +24,17 @@ public class EliminoMoto<T extends Vehiculo1> extends javax.swing.JFrame {
      */
     public EliminoMoto() {
         initComponents();
+        cargarDatosDelArchivo(); 
+    }
+    
+    private void cargarDatosDelArchivo() {  
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();
+        try {
+            persistencia.RecuperarVehiculos(listaVehiculos);
+            EscribirMoto();
+        } catch (Exception e) {
+            System.err.println("Error al cargar vehículos: " + e.getMessage());
+        }
     }
     
     public void EscribirMoto() {
@@ -57,6 +70,8 @@ public class EliminoMoto<T extends Vehiculo1> extends javax.swing.JFrame {
                 }
             }
         }
+        VehiculoPersistencia<T> persistencia = new VehiculoPersistencia<>();  // <-- agregar
+        persistencia.GuardarVehiculos(listaVehiculos); 
     }
     
     /**

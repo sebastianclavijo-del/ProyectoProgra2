@@ -149,7 +149,8 @@ public class IngresoMoto extends javax.swing.JFrame {
             if(manillar < 1 || manillar > 3) throw new IllegalArgumentException("Manillar debe ser entre 1 y 3.");
 
             IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
-
+            ventanaDatos.setTipoVehiculo("MOTO");
+            ventanaDatos.setDatosMoto(tipo, manillar, (int) cilindraje);
             ventanaDatos.setLocationRelativeTo(null);
             ventanaDatos.setVisible(true);
             this.dispose();

@@ -52,8 +52,7 @@ public class Auto extends Vehiculo1{
     this.estacion = estacion;
     this.velocidadMax = velMax;
     this.numPasajeros = numPasajeros;
-    // anio: como anioFabricacion es de tipo Date, necesitas convertirlo, p.ej.:
-    // this.anioFabricacion = new java.util.Calendar.Builder().setDate(anio, 0, 1).build().getTime();
+    this.anioFabricacion = anio;
     }
 
     

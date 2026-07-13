@@ -4,27 +4,85 @@
  */
 package GUI;
 
-import Excepciones.TextVacio;      
-import javax.swing.JOptionPane;    
-import java.util.ArrayList;        
-import Persistencia.VehiculoPersistencia; 
-import ClasesMaestras.Vehiculo1;   
-import Logica.Auto; 
+import Excepciones.TextVacio;
+import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import Persistencia.VehiculoPersistencia;
+import ClasesMaestras.Vehiculo1;
+import Logica.Auto;
+import Logica.Scooter;
+import Logica.Bicicleta;
+import Logica.Moto;
+import Logica.Camion;
+
 /**
  *
  * @author SEBASTIAN
  */
 public class IngresoDatosGenerales extends javax.swing.JFrame {
+    // Indica qué tipo de vehículo se está registrando.
+    // Valores esperados: "AUTO", "SCOOTER", "BICICLETA", "MOTO", "CAMION"
+    private String tipoVehiculo = "AUTO";
+
+    // ---- Datos específicos de Auto ----
     private String marca, modelo, placa;
     private int numPasajeros;
 
+    // ---- Datos específicos de Scooter ----
+    private boolean plegable, bluetoothScooter;
+    private double diametroRuedas;
+    private int porcBateriaScooter;
+    private String marcaScooter;
+
+    // ---- Datos específicos de Bicicleta ----
+    private boolean tipoMotorBici, pantallaBici;
+    private int tipoBici;
+
+    // ---- Datos específicos de Moto ----
+    private int tipoMoto, manillarMoto, cilindradaMoto;
+
+    // ---- Datos específicos de Camión ----
+    private int numEjesCamion;
+    private double cargaNetaCamion;
+    private String tipoRemolqueCamion;
+
+    public void setTipoVehiculo(String tipoVehiculo) {
+        this.tipoVehiculo = tipoVehiculo;
+    }
+
     public void setDatosPrevios(String marca, String modelo, String placa) {
-    this.marca = marca;
-    this.modelo = modelo;
-    this.placa = placa;
-}
+        this.marca = marca;
+        this.modelo = modelo;
+        this.placa = placa;
+    }
     public void setNumPasajeros(int numPasajeros) {
-    this.numPasajeros = numPasajeros;
+        this.numPasajeros = numPasajeros;
+    }
+
+    public void setDatosScooter(boolean plegable, boolean bluetooth, double diametroRuedas, int porcBateria, String marca) {
+        this.plegable = plegable;
+        this.bluetoothScooter = bluetooth;
+        this.diametroRuedas = diametroRuedas;
+        this.porcBateriaScooter = porcBateria;
+        this.marcaScooter = marca;
+    }
+
+    public void setDatosBicicleta(boolean tipoMotor, boolean pantalla, int tipo) {
+        this.tipoMotorBici = tipoMotor;
+        this.pantallaBici = pantalla;
+        this.tipoBici = tipo;
+    }
+
+    public void setDatosMoto(int tipo, int manillar, int cilindrada) {
+        this.tipoMoto = tipo;
+        this.manillarMoto = manillar;
+        this.cilindradaMoto = cilindrada;
+    }
+
+    public void setDatosCamion(int numEjes, double cargaNeta, String tipoRemolque) {
+        this.numEjesCamion = numEjes;
+        this.cargaNetaCamion = cargaNeta;
+        this.tipoRemolqueCamion = tipoRemolque;
     }
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresoDatosGenerales.class.getName());
@@ -88,15 +146,11 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-        jTextField3.setText("jTextField3");
-
-        jTextField4.setText("jTextField4");
-
-        jTextField5.setText("jTextField5");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,6 +221,8 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
+   
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
@@ -190,8 +246,34 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
                 persistencia.RecuperarVehiculos(lista);
             } catch (Exception e) {
             }
-            
-            Auto nuevoAuto = new Auto(this.marca, this.modelo, this.placa, numSerie, (int) peso, estacion, anio, velMax, this.numPasajeros);            lista.add(nuevoAuto);
+
+            Vehiculo1 nuevoVehiculo;
+
+            switch (tipoVehiculo) {
+                case "SCOOTER":
+                    nuevoVehiculo = new Scooter(anio, numSerie, (int) peso, estacion, velMax,
+                            false, plegable, bluetoothScooter, diametroRuedas, marcaScooter);
+                    ((Scooter) nuevoVehiculo).setPorcBateria(porcBateriaScooter);
+                    break;
+                case "BICICLETA":
+                    nuevoVehiculo = new Bicicleta(anio, numSerie, (int) peso, estacion, velMax,
+                            false, tipoMotorBici, pantallaBici, tipoBici);
+                    break;
+                case "MOTO":
+                    nuevoVehiculo = new Moto(anio, numSerie, (int) peso, estacion, velMax,
+                            false, tipoMoto, manillarMoto, cilindradaMoto);
+                    break;
+                case "CAMION":
+                    nuevoVehiculo = new Camion(anio, numSerie, (int) peso, estacion, velMax,
+                            false, numEjesCamion, cargaNetaCamion, tipoRemolqueCamion);
+                    break;
+                default: // "AUTO"
+                    nuevoVehiculo = new Auto(this.marca, this.modelo, this.placa, numSerie,
+                            (int) peso, estacion, anio, velMax, this.numPasajeros);
+                    break;
+            }
+
+            lista.add(nuevoVehiculo);
             
             persistencia.GuardarVehiculos(lista);
 
@@ -215,6 +297,11 @@ public class IngresoDatosGenerales extends javax.swing.JFrame {
            anterior.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     /**
      * @param args the command line arguments

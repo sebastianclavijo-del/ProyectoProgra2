@@ -179,14 +179,14 @@ public class IngresoScooter extends javax.swing.JFrame {
 
             // 4. Instanciar siguiente pantalla y pasar datos
             IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
-            
-            // Asumiendo que definiste estos setters en IngresoDatosGenerales:
-            // ventanaDatos.setMarca(jTextField1.getText());
-            // ventanaDatos.setPlegable(plegable.equals("si"));
-            // ventanaDatos.setDiametro(diametro);
-            // ventanaDatos.setBluetooth(bluetooth.equals("si"));
-            // ventanaDatos.setBateria(bateria);
-
+            ventanaDatos.setTipoVehiculo("SCOOTER");
+            ventanaDatos.setDatosScooter(
+            plegable.equals("si"),
+            bluetooth.equals("si"),
+            diametro,
+            bateria,
+            jTextField1.getText()
+            );
             ventanaDatos.setLocationRelativeTo(null);
             ventanaDatos.setVisible(true);
             this.dispose();

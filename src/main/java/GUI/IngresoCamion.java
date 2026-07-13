@@ -209,13 +209,9 @@ public class IngresoCamion extends javax.swing.JFrame {
             String tipoRemolque = T_TipoR.getText();
             
             // 3. Instanciar la siguiente pantalla
-            IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
-            
-            // 4. PASO DE DATOS (Asegúrate de tener estos setters en IngresoDatosGenerales)
-            // ventanaDatos.setNroEjes(ejes);
-            // ventanaDatos.setCargaNeta(carga);
-            // ventanaDatos.setTipoRemolque(tipoRemolque);
-            
+           IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
+            ventanaDatos.setTipoVehiculo("CAMION");
+            ventanaDatos.setDatosCamion(ejes, carga, tipoRemolque);
             ventanaDatos.setLocationRelativeTo(null);
             ventanaDatos.setVisible(true);
             this.dispose();

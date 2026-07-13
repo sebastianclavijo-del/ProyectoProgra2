@@ -230,13 +230,12 @@ public class IngresoBicicleta extends javax.swing.JFrame {
 
             // 3. Instanciamos la siguiente pantalla
             IngresoDatosGenerales ventanaDatos = new IngresoDatosGenerales();
-            
-            // 4. PASO DE DATOS: Asegúrate de tener estos setters en IngresoDatosGenerales
-            // ventanaDatos.setTipo(Integer.parseInt(T_Tipo.getText()));
-            // ventanaDatos.setTipoMotor(Integer.parseInt(T_TipoM.getText()));
-            // ventanaDatos.setPantalla(pantalla.equals("si") || pantalla.equals("sí"));
-            // ventanaDatos.setPorcentajeBateria(Integer.parseInt(T_PorcBat.getText()));
-            
+            ventanaDatos.setTipoVehiculo("BICICLETA");
+            ventanaDatos.setDatosBicicleta(
+            Integer.parseInt(T_TipoM.getText()) != 0,   // tipoMotor como boolean
+            pantalla.equals("si") || pantalla.equals("sí"),
+            Integer.parseInt(T_Tipo.getText())
+            );
             ventanaDatos.setLocationRelativeTo(null);
             ventanaDatos.setVisible(true);
             this.dispose();

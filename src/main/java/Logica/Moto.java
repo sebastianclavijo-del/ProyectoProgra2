@@ -42,11 +42,11 @@ public class Moto extends Vehiculo1{
     }
     
     //Constructor
-    Moto(int anioFab, int nSer,int peso, int est, double vMax, boolean al, int tip, int man, int cil){
-        super(anioFab, nSer, peso, est, vMax, al);
-        tipo = tip;
-        manillar = man;
-        cilindrada = cil;
+    public Moto(int anioFab, int nSer, int peso, int est, double vMax, boolean al, int tip, int man, int cil){
+    super(anioFab, nSer, peso, est, vMax, al);
+    tipo = tip;
+    manillar = man;
+    cilindrada = cil;
     }
     Moto(){
     }

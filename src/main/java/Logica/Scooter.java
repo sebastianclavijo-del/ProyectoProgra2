@@ -111,7 +111,6 @@ public class Scooter extends Vehiculo1 implements VehElectrico{
             }
         barra.append("]");
 
-        // \r regresa el cursor al inicio de la línea actual
         System.out.print("\r" + barra.toString() + " " + porcentaje + "%");
             try{
                 Thread.sleep(5000);

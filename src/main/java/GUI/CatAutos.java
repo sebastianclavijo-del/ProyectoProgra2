@@ -35,7 +35,6 @@ public class CatAutos extends javax.swing.JFrame {
         try {
             persistencia.RecuperarVehiculos(listaCompleta);
             
-            // DIAGNÓSTICO
             System.out.println("DEBUG: Se encontraron " + listaCompleta.size() + " vehículos.");
             
             for(Vehiculo1 v : listaCompleta) {
@@ -205,18 +204,16 @@ public class CatAutos extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void B_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_SalirActionPerformed
-        // TODO add your handling code here:
+    private void B_SalirActionPerformed(java.awt.event.ActionEvent evt) {
         SelecciónCategoria ventanaCategoria = new SelecciónCategoria();
         ventanaCategoria.setLocationRelativeTo(null);
         ventanaCategoria.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_B_SalirActionPerformed
+    }
 
-    private void B_Iniciar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_Iniciar_AlquilerActionPerformed
-        // TODO add your handling code here:
+    private void B_Iniciar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {
         int filaSeleccionada = jTable1.getSelectedRow();
         
         if (filaSeleccionada == -1) {
@@ -231,7 +228,7 @@ public class CatAutos extends javax.swing.JFrame {
             ventanaAlquiler.setVisible(true);
             this.dispose();  
         }
-    }//GEN-LAST:event_B_Iniciar_AlquilerActionPerformed
+    }
 
     /**
      * @param args the command line arguments
@@ -252,13 +249,10 @@ public class CatAutos extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new CatAutos().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_Iniciar_Alquiler;
     private javax.swing.JButton B_Salir;
     private javax.swing.JLabel jLabel1;
@@ -266,5 +260,4 @@ public class CatAutos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    // End of variables declaration//GEN-END:variables
 }

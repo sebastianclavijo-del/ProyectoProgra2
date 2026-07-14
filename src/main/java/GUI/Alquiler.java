@@ -30,9 +30,6 @@ public class Alquiler extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Alquiler.class.getName());
 
-    /**
-     * Creates new form Alquiler
-     */
     public Alquiler() {
         initComponents();
         getContentPane().setBackground(new java.awt.Color(139, 69, 19));
@@ -450,22 +447,19 @@ public class Alquiler extends javax.swing.JFrame {
             System.out.println("Aviso: no se recibió el vehículo seleccionado; no se marcó como alquilado.");
         }
            
-
-            // 6. Navegación a la ventana de confirmación
             AlquilerConfirmado ventanaConfirmacion = new AlquilerConfirmado();
             ventanaConfirmacion.setLocationRelativeTo(null);
             ventanaConfirmacion.setVisible(true);
             this.dispose();
 
         } catch (TextVacio | SinLetras | SinDigitos | CaractInicio | IllegalArgumentException | DateTimeParseException ex) {
-            // Si AL MENOS UNA validación falla, atrapamos el error y mostramos tu mensaje
             JOptionPane.showMessageDialog(this, ex.getMessage(), "Error de Validación", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error inesperado. Verifique los datos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_Ingresar_AlquilerActionPerformed
+    }
 
-    private void T_IDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_IDClienteActionPerformed
+    private void T_IDClienteActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             idCliente = Integer.parseInt(T_IDCliente.getText());
             RevisionTextoVacio(T_IDCliente.getText());
@@ -481,9 +475,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this, "Error: Se encontró un carácter especial en la cadena.");
         }
-    }//GEN-LAST:event_T_IDClienteActionPerformed
+    }
 
-    private void T_NombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_NombreActionPerformed
+    private void T_NombreActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             nombre = T_Nombre.getText();
             RevisionTextoDig(nombre);
@@ -499,9 +493,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_NombreActionPerformed
+    }
 
-    private void T_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_TelefonoActionPerformed
+    private void T_TelefonoActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             numTel = T_Telefono.getText();
             RevisionTextoLet(numTel);
@@ -517,9 +511,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(TextVacio e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_TelefonoActionPerformed
+    }
 
-    private void T_DNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_DNIActionPerformed
+    private void T_DNIActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             dni = Integer.parseInt(T_DNI.getText());
             RevisionTextoVacio(T_DNI.getText());
@@ -535,9 +529,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_DNIActionPerformed
+    }
 
-    private void T_FechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_FechaActionPerformed
+    private void T_FechaActionPerformed(java.awt.event.ActionEvent evt) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try{
             fechaReg = T_Fecha.getText();
@@ -554,9 +548,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(DateTimeParseException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_FechaActionPerformed
+    }
 
-    private void T_NumeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_NumeroActionPerformed
+    private void T_NumeroActionPerformed(java.awt.event.ActionEvent evt) {
         try{
         num = Integer.parseInt(T_Numero.getText());
         RevisionTextoVacio(T_Numero.getText());
@@ -572,9 +566,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_NumeroActionPerformed
+    }
 
-    private void T_TipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_TipoActionPerformed
+    private void T_TipoActionPerformed(java.awt.event.ActionEvent evt) {
         try{
             tipoLic = T_Tipo.getText();
             RevisionTextoDig(nombre);
@@ -590,9 +584,9 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(IllegalArgumentException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_TipoActionPerformed
+    }
 
-    private void T_Fecha_VencimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_T_Fecha_VencimientoActionPerformed
+    private void T_Fecha_VencimientoActionPerformed(java.awt.event.ActionEvent evt) {
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         try{
             fechaVenc = T_Fecha.getText();
@@ -609,23 +603,22 @@ public class Alquiler extends javax.swing.JFrame {
         }catch(DateTimeParseException e){
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_T_Fecha_VencimientoActionPerformed
+    }
 
-    private void B_SIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_SIActionPerformed
+    private void B_SIActionPerformed(java.awt.event.ActionEvent evt) {
         ant = false;
-    }//GEN-LAST:event_B_SIActionPerformed
+    }
 
-    private void B_NOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_NOActionPerformed
+    private void B_NOActionPerformed(java.awt.event.ActionEvent evt) {
         ant = true;
-    }//GEN-LAST:event_B_NOActionPerformed
+    }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
         SelecciónCategoria ventanaAnterior = new SelecciónCategoria();
         ventanaAnterior.setLocationRelativeTo(null);
         ventanaAnterior.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }
 
     /**
      * @param args the command line arguments

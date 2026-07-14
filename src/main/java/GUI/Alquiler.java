@@ -351,9 +351,9 @@ public class Alquiler extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void Ingresar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Ingresar_AlquilerActionPerformed
+    private void Ingresar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             // 1. Extraemos los textos de la interfaz AL MOMENTO DE HACER CLIC
             String txtNombre = T_Nombre.getText();
@@ -406,7 +406,6 @@ public class Alquiler extends javax.swing.JFrame {
             MovTransaccionales.ArregloCliente1 contenedorClientes = new MovTransaccionales.ArregloCliente1();
 
             try { 
-            // 2. Usamos el nombre real del método (cargarClientes)
             Persistencia.PersistenciaCliente.cargarClientes(contenedorClientes); 
             } catch (Exception e) {
                System.out.println("No se pudo cargar o archivo nuevo.");
@@ -420,20 +419,19 @@ public class Alquiler extends javax.swing.JFrame {
     ArrayList<Vehiculo1> todosLosVehiculos = new ArrayList<>();
     persistenciaVeh.RecuperarVehiculos(todosLosVehiculos);
 
-    Vehiculo1 vehiculoActualizado = null;   // <-- nuevo
+    Vehiculo1 vehiculoActualizado = null;
     for (Vehiculo1 v : todosLosVehiculos) {
         if (v.getNroSerie() == vehiculoSeleccionado.getNroSerie()) {
             v.setAlq(true);
             v.setIdClienteAlquiler(idCliente);
             v.setFechaAlquiler(txtFechaReg);
-            vehiculoActualizado = v;         // <-- nuevo
+            vehiculoActualizado = v;
             break;
         }
     }
 
     persistenciaVeh.GuardarVehiculos(todosLosVehiculos);
 
-    // NUEVO: registrar el alquiler en el historial (alquileres.dat)
         if (vehiculoActualizado != null) {
             Persistencia.AlquilerPersistencia persistenciaAlq = new Persistencia.AlquilerPersistencia();
             Logica.Nodo cabExistente = persistenciaAlq.RecuperarAlquiler();
@@ -639,13 +637,10 @@ public class Alquiler extends javax.swing.JFrame {
         } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new Alquiler().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton B_NO;
     private javax.swing.JButton B_SI;
     private javax.swing.JButton Ingresar_Alquiler;

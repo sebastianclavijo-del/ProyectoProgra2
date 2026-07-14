@@ -41,21 +41,21 @@ public class Alquiler implements Serializable{
         return cli;
     }
     
-    public String getFechaInicio() {          // <-- agregar
+    public String getFechaInicio() {
         return fechaInicio;
     }
-    public void setFechaInicio(String fechaInicio) {   // <-- agregar
+    public void setFechaInicio(String fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFin() {              // <-- agregar
+    public String getFechaFin() {
         return fechaFin;
     }
-    public void setFechaFin(String fechaFin) {  // <-- agregar
+    public void setFechaFin(String fechaFin) {
         this.fechaFin = fechaFin;
     }
 
-    public boolean isActivo() {                 // <-- agregar
+    public boolean isActivo() {
         return fechaFin == null || fechaFin.equals("-");
     }
     public boolean CrearAlquiler(){

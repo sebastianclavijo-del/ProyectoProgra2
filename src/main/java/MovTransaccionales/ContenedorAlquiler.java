@@ -42,11 +42,8 @@ public class ContenedorAlquiler {
         if(cab == null){
             System.out.println("La lista de alquileres esta vacia...");
         } else {
-            // CORRECCIÓN: Recorremos hasta que actual sea null para incluir el último nodo
             while(actual != null){
-                // CORRECCIÓN: Imprimimos el dato
                 System.out.println(actual.dato.toString());
-                // CORRECCIÓN: Avanzamos al siguiente nodo (evita bucle infinito)
                 actual = actual.sig; 
             }
         }

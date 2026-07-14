@@ -25,24 +25,18 @@ public class PersistenciaCliente {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ARCHIVO_CLIENTES))) {
         
         int total = contenedor.cantidadClientes();
-        ClienteSimple[] listaAGuardar = new ClienteSimple[total];   // <-- cambio clave
+        ClienteSimple[] listaAGuardar = new ClienteSimple[total];
         for (int i = 0; i < total; i++) {
             listaAGuardar[i] = (ClienteSimple) contenedor.obtenerCliente(i);
-        }
-        
-        oos.writeObject(listaAGuardar);
-        
+        }    
+        oos.writeObject(listaAGuardar);    
         System.out.println("¡Datos de clientes serializados con éxito en " + ARCHIVO_CLIENTES + "!");
         
-    } catch (IOException e) {
-        System.err.println("Error al escribir en el archivo .dat: " + e.getMessage());
-    }
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo .dat: " + e.getMessage());
+        }
     }
 
-    /**
-     * Lee el archivo binario .dat y restaura los clientes en el ArregloCliente1
-     * @param contenedor Objeto ArregloCliente1 donde se cargarán los datos leídos.
-     */
     public static void cargarClientes(ArregloCliente1 contenedor) {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ARCHIVO_CLIENTES))) {
             

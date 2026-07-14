@@ -15,8 +15,7 @@ import ClasesMaestras.Vehiculo1;
 public class Moto extends Vehiculo1{
     int tipo, manillar,cilindrada;
     /*
-    Tipos de moto: estandar(1), cruiser(2), deportivo(3),
-    off-road(4), doble proposito(5)
+    Tipos de moto: estandar(1), cruiser(2), deportivo(3), off-road(4), doble proposito(5)
     Tipos de manillar: recto(1), riser(2), clip-on(3)
     */
 

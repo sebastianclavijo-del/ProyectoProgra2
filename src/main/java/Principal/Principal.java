@@ -4,7 +4,7 @@
  */
 package Principal;
 
-import GUI.Inicio; // Importamos tu primera pantalla
+import GUI.Inicio;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 

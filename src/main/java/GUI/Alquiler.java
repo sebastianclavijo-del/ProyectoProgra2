@@ -144,7 +144,7 @@ public class Alquiler extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24));
         jLabel1.setForeground(new java.awt.Color(255, 153, 51));
         jLabel1.setText("Alquiler");
 
@@ -160,7 +160,7 @@ public class Alquiler extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 153, 51));
         jLabel5.setText("DNI");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18));
         jLabel6.setForeground(new java.awt.Color(255, 153, 51));
         jLabel6.setText("Datos de la licencia");
 
@@ -209,9 +209,9 @@ public class Alquiler extends javax.swing.JFrame {
         B_NO.setText("NO");
         B_NO.addActionListener(this::B_NOActionPerformed);
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck.png"))); // NOI18N
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck.png")));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck2.png"))); // NOI18N
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoCheck2.png")));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -240,9 +240,9 @@ public class Alquiler extends javax.swing.JFrame {
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoAlquiler2.png"))); // NOI18N
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoAlquiler2.png")));
 
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoSalir.png"))); // NOI18N
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/IconoSalir.png")));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -355,7 +355,6 @@ public class Alquiler extends javax.swing.JFrame {
 
     private void Ingresar_AlquilerActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // 1. Extraemos los textos de la interfaz AL MOMENTO DE HACER CLIC
             String txtNombre = T_Nombre.getText();
             String txtID = T_IDCliente.getText();
             String txtTel = T_Telefono.getText();

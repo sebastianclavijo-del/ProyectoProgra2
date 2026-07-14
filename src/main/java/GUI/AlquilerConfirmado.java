@@ -92,9 +92,9 @@ public class AlquilerConfirmado extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
         Inicio ventanaInicio = new Inicio();
     
     ventanaInicio.setLocationRelativeTo(null);
@@ -102,7 +102,7 @@ public class AlquilerConfirmado extends javax.swing.JFrame {
     ventanaInicio.setVisible(true);
     
     this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     /**
      * @param args the command line arguments
@@ -125,11 +125,9 @@ public class AlquilerConfirmado extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new AlquilerConfirmado().setVisible(true));
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
